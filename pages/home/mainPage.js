@@ -13,7 +13,7 @@ const MainPage = () => {
         <Dropdown defaultAccordion={true} links={["flex","this is me","wow so cool!","deamn"]}/>
       </div>
       <div className={`${s["main-page-chatbar"]}`}>
-        <ChatbarStd placeholder="Have a question? Ask here and I’ll get back to you soon! "/>
+        <ChatbarStd second={true} secondPlaceholder="email please" status={{text:"loading",indicator:"loading"}} placeholder="Have a question? Ask here and I’ll get back to you soon! "/>
       </div>
     </div>
   )
