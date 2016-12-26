@@ -117,6 +117,7 @@
 }
 
 .accordion-article-subtext {
+  padding-top:0;
   padding-left: 1rem;
   opacity: 0.5;
 }

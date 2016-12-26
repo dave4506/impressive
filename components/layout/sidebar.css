@@ -5,15 +5,18 @@
   bottom:0;
   right:0;
   overflow: hidden;
+  display: flex;
 }
 
 .menu-sidebar {
+  position: relative;
   height: 100vh;
   width: 30%;
   background-color: #F9F9F9;
 }
 
 .menu-main-content {
+  position: relative;
   height: 100vh;
   width: 70%;
   background-color: white;

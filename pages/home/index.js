@@ -12,14 +12,7 @@ import React, { PropTypes } from 'react';
 import s from './styles.css';
 import Layout from '../../components/layout/sidebar'
 import Sidebar from './sidebar'
-
-const mainPage = () => {
-  return (
-    <div>
-    </div>
-  )
-}
-
+import Mainpage from './mainPage'
 
 class HomePage extends React.Component {
 
@@ -32,7 +25,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div>
-        <Layout mainPage={mainPage()} sideBar={Sidebar()}/>
+        <Layout mainPage={Mainpage()} sideBar={Sidebar()}/>
       </div>
     );
   }
