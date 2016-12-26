@@ -10,6 +10,16 @@
 
 import React, { PropTypes } from 'react';
 import s from './styles.css';
+import Layout from '../../components/layout/sidebar'
+import Sidebar from './sidebar'
+
+const mainPage = () => {
+  return (
+    <div>
+    </div>
+  )
+}
+
 
 class HomePage extends React.Component {
 
@@ -22,7 +32,7 @@ class HomePage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello World</h1>
+        <Layout mainPage={mainPage()} sideBar={Sidebar()}/>
       </div>
     );
   }
