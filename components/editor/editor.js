@@ -3,6 +3,8 @@ import s from './editor.css';
 import EditorToolbar from './editorToolbar'
 import {Editor, EditorState} from 'draft-js';
 
+require("./draft.css");
+
 class EditorComponent extends React.Component {
   constructor(props){
     super(props)
@@ -12,7 +14,6 @@ class EditorComponent extends React.Component {
 
   render() {
     const {} = this.props;
-    console.log(this.refs);
     return (
       <div className={`${s["editor-wrapper"]}`}>
         <EditorToolbar/>
