@@ -1,5 +1,6 @@
 .editor-wrapper {
   height: 100%;
+  display: flex;
 }
 
 .editor-toolbar-text {
@@ -48,4 +49,28 @@
 
 .editor-icon__unactive:hover {
   opacity: 1;
+}
+
+.editor-core-wrapper {
+  width: calc(100% - 15rem);
+  margin-right:7.5rem;
+  height: 100%;
+}
+
+.editor-introduction {
+  font-family: 'Merriweather', serif;
+  background-color: transparent;
+  border:none;
+  font-size: 4rem;
+  letter-spacing: 0.2rem;
+  width: 100%;
+  font-weight: 400;
+}
+
+.editor-introduction::-webkit-resizer {
+  display: none;
+}
+
+.editor-introduction:focus {
+  outline: none;
 }
