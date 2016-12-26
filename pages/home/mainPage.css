@@ -4,16 +4,12 @@
 }
 
 .main-page-chatbar {
-  position: absolute;
-  bottom:0;
-  left:0;
-  right:0;
 }
 
 .main-nav {
-  position: absolute;
-  top:0;
-  left:0;
-  right:0;
   z-index: 999;
+}
+
+.main-editor {
+  height: calc(100% - 18rem);
 }
