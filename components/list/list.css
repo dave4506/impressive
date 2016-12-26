@@ -57,9 +57,12 @@
 }
 
 .list-tab {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 6rem;
   width: 50%;
   text-align: center;
-  padding: 2rem;
   transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1);
   text-transform: uppercase;
 }
