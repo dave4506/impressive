@@ -1,86 +1,18 @@
 import React, { PropTypes } from 'react';
 import s from './editor.css';
-import EditorToolbar from './editorToolbar'
 import Chatbar from '../chatbar'
+
+import blockButtons from './blockButtons'
+import inlineButtons from './inlineButtons'
+import linkComponent from './linkComponent'
+import sideButtons from './sideButtons'
+
+import {AtomicBlockUtils} from 'draft-js';
 
 import {
   Editor,
   createEditorState,
 } from 'medium-draft';
-
-const icon = (src,className)=>{
-  console.log("here?",src)
-  return ({}) => {
-    return (<div className={className}><img src={require(src)}/></div>)
-  }
-}
-
-const blockButtons = [{
-  component: icon('./icons/h3.svg',"md-RichEditor-customButton"),
-  label: "Bl",
-  style: 'header-three',
-  description: "Header",
-},{
-  component: icon('./icons/quote.svg',"md-RichEditor-customButton"),
-  label: "Bl",
-  style: 'blockquote',
-  description: "Quote",
-},
-{
-  component: icon('./icons/list.svg',"md-RichEditor-customButton"),
-  label: "LI",
-  style: 'ordered-list-item',
-  description: "List",
-},
-{
-  component: icon('./icons/bulletpoints.svg',"md-RichEditor-customButton"),
-  label: "OL",
-  style: 'unordered-list-item',
-  description: "Bullet Points",
-}
-]
-
-const inlineButtons = [
-{
-  label: 'B',
-  style: 'BOLD',
-  icon: 'bold',
-  description: 'Bold',
-},
-{
-  label: 'U',
-  style: 'UNDERLINE',
-  component: icon('./icons/underline.svg',"md-RichEditor-customButton"),
-  icon: 'underline',
-  description: 'Underline',
-},
-{
-  label: 'Hi',
-  style: 'HIGHLIGHT',
-  component: icon('./icons/highlight.svg',"md-RichEditor-customButton"),
-  description: 'Highlight selection',
-},{
-  label: '#',
-  style: "hyperlink",
-  icon: 'link',
-  description: 'Add a link',
-}]
-
-const sideButtons = [{
-  title: 'Image',
-  component: icon('./icons/image.svg',"md-side-button")
-},
-{
-  title: 'Icon',
-  component: icon('./icons/icon.svg',"md-side-button")
-},
-{
-  title: 'Project',
-  component: icon('./icons/project.svg',"md-side-button")
-}
-]
-
-const linkComponent = icon('./icons/link.svg',"md-RichEditor-customButton");
 
 class EditorComponent extends React.Component {
   constructor(props){
