@@ -3,13 +3,23 @@
   display: flex;
   align-items: center;
   padding: 0 6rem;
-  width: 100%;
+  width: calc(100% - 12rem);
+  position: relative;
+  z-index: 999;
   background-color: white;
 }
 
 .dropdown *,
 .navbar * {
   padding: 0 1.5rem;
+}
+
+.navbar-title-right {
+  position: absolute;
+  top:0;bottom:0;right:0;
+  padding-right: 6rem;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-title {

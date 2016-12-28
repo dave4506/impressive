@@ -9,7 +9,7 @@ const sideButtons = [{
 },
 {
   title: 'Icon',
-  component: icon('./icons/line.svg',"md-side-button")
+  component: icon('./icons/icon.svg',"md-side-button")
 }]
 
 

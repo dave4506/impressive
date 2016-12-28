@@ -12,6 +12,7 @@ import { createStore,applyMiddleware } from 'redux';
 import reducer from './reducer'
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
+import {Map} from 'immutable';
 
 const middlewares = [thunk];
 
@@ -22,7 +23,9 @@ if (process.env.NODE_ENV === `development`) {
 
 var store = null;
 
-store = createStore(reducer,applyMiddleware(...middlewares));
+const initialState = Map();
+
+store = createStore(reducer,initialState,applyMiddleware(...middlewares));
 
 store.getState();
 

@@ -9,9 +9,6 @@ import Image from '../../components/image/image'
 const MainPage = () => {
   return (
     <div className={`${s["main-page"]}`}>
-      <div className={`${s["main-nav"]}`}>
-        <Nav title="introduction" links={["follow author","share"]}/>
-      </div>
       <div className={`${s["main-editor"]}`}>
         <Editor/>
       </div>
