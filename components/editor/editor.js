@@ -36,6 +36,8 @@ const sideButtons = [{
 }
 ]
 
+const linkComponent = icon('./icons/link.svg',"md-RichEditor-customButton");
+
 class EditorComponent extends React.Component {
   constructor(props){
     super(props)
@@ -65,6 +67,7 @@ class EditorComponent extends React.Component {
               placeholder="May the force be with you"
               sideButtons={sideButtons}
               blockButtons={blockButtons}
+              linkComponent={linkComponent}
             />
           </div>
         </div>
