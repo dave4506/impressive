@@ -16,10 +16,54 @@ const icon = (src,className)=>{
 }
 
 const blockButtons = [{
-  component: icon('./icons/list.svg',"md-RichEditor-customButton"),
-  label: "UL",
+  component: icon('./icons/h3.svg',"md-RichEditor-customButton"),
+  label: "Bl",
   style: 'header-three',
+  description: "Header",
+},{
+  component: icon('./icons/quote.svg',"md-RichEditor-customButton"),
+  label: "Bl",
+  style: 'blockquote',
+  description: "Quote",
+},
+{
+  component: icon('./icons/list.svg',"md-RichEditor-customButton"),
+  label: "LI",
+  style: 'ordered-list-item',
   description: "List",
+},
+{
+  component: icon('./icons/bulletpoints.svg',"md-RichEditor-customButton"),
+  label: "OL",
+  style: 'unordered-list-item',
+  description: "Bullet Points",
+}
+]
+
+const inlineButtons = [
+{
+  label: 'B',
+  style: 'BOLD',
+  icon: 'bold',
+  description: 'Bold',
+},
+{
+  label: 'U',
+  style: 'UNDERLINE',
+  component: icon('./icons/underline.svg',"md-RichEditor-customButton"),
+  icon: 'underline',
+  description: 'Underline',
+},
+{
+  label: 'Hi',
+  style: 'HIGHLIGHT',
+  component: icon('./icons/highlight.svg',"md-RichEditor-customButton"),
+  description: 'Highlight selection',
+},{
+  label: '#',
+  style: "hyperlink",
+  icon: 'link',
+  description: 'Add a link',
 }]
 
 const sideButtons = [{
@@ -67,6 +111,7 @@ class EditorComponent extends React.Component {
               placeholder="May the force be with you"
               sideButtons={sideButtons}
               blockButtons={blockButtons}
+              inlineButtons={inlineButtons}
               linkComponent={linkComponent}
             />
           </div>
