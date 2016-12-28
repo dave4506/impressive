@@ -8,29 +8,31 @@ import {
   createEditorState,
 } from 'medium-draft';
 
-const icon = (src)=>{
+const icon = (src,className)=>{
+  console.log("here?",src)
   return ({}) => {
-    return (<div className="md-side-button"><img src={require(src)}/></div>)
+    return (<div className={className}><img src={require(src)}/></div>)
   }
 }
 
 const blockButtons = [{
-  label: icon('./icons/list.svg'),
-  style: 'unordered-list',
-  description: "List"
+  component: icon('./icons/list.svg',"md-RichEditor-customButton"),
+  label: "UL",
+  style: 'header-three',
+  description: "List",
 }]
 
 const sideButtons = [{
   title: 'Image',
-  component: icon('./icons/image.svg')
+  component: icon('./icons/image.svg',"md-side-button")
 },
 {
   title: 'Icon',
-  component: icon('./icons/icon.svg')
+  component: icon('./icons/icon.svg',"md-side-button")
 },
 {
   title: 'Project',
-  component: icon('./icons/project.svg')
+  component: icon('./icons/project.svg',"md-side-button")
 }
 ]
 
@@ -62,11 +64,12 @@ class EditorComponent extends React.Component {
               onChange={this.onChange}
               placeholder="May the force be with you"
               sideButtons={sideButtons}
+              blockButtons={blockButtons}
             />
           </div>
         </div>
         <div className={`${s["editor-chatbar"]}`}>
-          <Chatbar type="icon" props={{instruct:"List type",icons:[{src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fanimals-01.svg?alt=media&token=b135ea55-ef09-4503-b495-1712b1a2fe78",key:"animal"}]}}/>
+          <Chatbar type="icon" props={{instruct:"List type",icons:[{src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fclothes-01.svg?alt=media&token=7261cf03-befd-4acd-8ead-dba43fc04d3e",key:"animal"}]}}/>
         </div>
       </div>
     )

@@ -6,21 +6,13 @@
 .md-editor-toolbar {
   background: #D9D9D9;
   border-radius: 0;
-  padding: 0 0.5rem;
   display: flex;
   justify-content: center;
 }
 
 .md-RichEditor-controls {
   border: none;
-}
-
-.md-RichEditor-styleButton {
-  color:rgba(0,0,0,0.2);
-  padding: 1rem 0.5rem;
-  font-size: 1.4rem;
-  text-align: center;
-  transition: color 500ms cubic-bezier(0.2, 1, 0.3, 1);
+  padding: 0 0.5rem;
 }
 
 .md-RichEditor-styleButton:hover {
@@ -91,6 +83,36 @@
 
 .md-side-button img {
   width: 2.0rem;
+}
+
+.md-RichEditor-controls {
+  display: flex;
+  align-items: center;
+}
+
+.md-RichEditor-customButton {
+  cursor: pointer;
+  opacity: 0.2;
+}
+
+.md-RichEditor-styleButton{
+  height: 100%;
+  color:rgba(0,0,0,0.2);
+  padding: 1rem 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  text-align: center;
+  transition: color 500ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.md-side-button:hover {
+  opacity:0.8;
+}
+
+.md-RichEditor-customButton img {
+  width: 1.6rem;
 }
 
 @keyframes fadeDown {
