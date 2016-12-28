@@ -18,7 +18,7 @@ const statusClass = (indicator) => {
   }
 }
 
-const StatusIndicator = ({indicator,tooltips,overrideTip}) => {
+const StatusIndicator = ({indicator}) => {
   return (
     <div className={`${s["simple-indicator"]} ${statusClass(indicator)}`}></div>
   )

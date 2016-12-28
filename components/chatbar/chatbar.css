@@ -118,6 +118,20 @@
   opacity: 0.5;
 }
 
+.chatbar-icons {
+  display: flex;
+  align-items: center;
+}
+
+.chatbar-icon {
+  padding: 0 0.5rem;
+}
+
+.chatbar-text {
+  text-transform: uppercase;
+  padding: 0 2rem;  
+}
+
 @keyframes loading {
   0% {
     opacity:0.5;

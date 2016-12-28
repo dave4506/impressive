@@ -1,5 +1,105 @@
 .DraftEditor-root {
-  padding-top: 2rem;
-  font-family: 'Merriweather', serif;
-  font-size: 1.5rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+.md-editor-toolbar {
+  background: #D9D9D9;
+  border-radius: 0;
+  padding: 0 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.md-RichEditor-controls {
+  border: none;
+}
+
+.md-RichEditor-styleButton {
+  color:rgba(0,0,0,0.2);
+  padding: 1rem 0.5rem;
+  font-size: 1.4rem;
+  text-align: center;
+  transition: color 500ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.md-RichEditor-styleButton:hover {
+  color:rgba(0,0,0,1);
+}
+
+.md-editor-toolbar:after {
+  border-top: 5px solid #D9D9D9;
+}
+
+[class*=hint--]:after {
+  background: black;
+  color:white;
+  font-weight: 400;
+  box-shadow:none;
+  text-shadow: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+[class*=hint--]:before {
+  display: none;
+}
+
+.md-add-button {
+  padding: 0 1rem;
+  transform:scale(0.8);
+  background: url('./add.svg');
+  opacity:0.2;
+  border-radius: 0;
+  background-size: contain;
+  transition: all 700ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.md-add-button.md-open-button {
+  transform: scale(0.8) rotate(225deg);
+}
+
+.md-add-button:hover {
+  opacity:0.8;
+}
+
+.md-side-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.md-side-toolbar span {
+  padding-top: 1rem;
+}
+
+.md-side-button {
+  cursor: pointer;
+  opacity: 0.2;
+  padding-top: 0.6rem;
+  animation-name: fadeDown;
+  animation-duration: 500ms;
+  animation-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition: all 700ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.md-side-button:hover {
+  opacity:0.8;
+}
+
+.md-side-button img {
+  width: 2.0rem;
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 0.2;
+    transform: translateY(0%);
+  }
 }

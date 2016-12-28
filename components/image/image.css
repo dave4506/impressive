@@ -1,0 +1,36 @@
+.image-loader__loaded {
+  display: none;
+}
+.image-loader__error {
+  display: none;
+}
+.image-loader__init {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-img__loaded {
+  display: auto;
+}
+.image-img__init {
+  display: none;
+}
+.image-img__error {
+  display: none;
+}
+
+.image-error__loaded {
+  display: none;
+}
+.image-error__error {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color:#e74c3c;
+  text-transform: uppercase;
+}
+.image-error__init {
+  display: none;
+}
