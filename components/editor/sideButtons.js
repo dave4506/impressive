@@ -8,8 +8,8 @@ const sideButtons = [{
   component: ImageButton
 },
 {
-  title: 'Break',
-  component: BreakButton
+  title: 'Icon',
+  component: icon('./icons/line.svg',"md-side-button")
 }]
 
 
