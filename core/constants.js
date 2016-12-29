@@ -53,3 +53,7 @@ export const DELETE_DRAFT = "DELETE_DRAFT";
 
 export const CREATE_ARTICLE = "CREATE_ARTICLE";
 export const DELETE_ARTICLE = "DELETE_ARTICLE";
+
+export const LOG_IN = "LOG_IN";
+export const LOG_OUT = "LOG_OUT";
+export const USER_STATUS_CHANGE = "USER_STATUS_CHANGE";

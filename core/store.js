@@ -13,6 +13,18 @@ import reducer from './reducer'
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import {Map} from 'immutable';
+import {monitorLogIn} from './actions/user';
+import firebase from 'firebase';
+
+var config = {
+  apiKey: "AIzaSyCMKqniQiTAeL4Ayd0xP-XtQynfHkG7L3I",
+  authDomain: "impresssive-86554.firebaseapp.com",
+  databaseURL: "https://impresssive-86554.firebaseio.com",
+  storageBucket: "impresssive-86554.appspot.com",
+  messagingSenderId: "102918285946"
+};
+
+firebase.initializeApp(config);
 
 const middlewares = [thunk];
 
@@ -28,5 +40,7 @@ const initialState = Map();
 store = createStore(reducer,initialState,applyMiddleware(...middlewares));
 
 store.getState();
+
+store.dispatch(monitorLogIn());
 
 export default store;

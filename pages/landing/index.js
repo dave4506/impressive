@@ -1,7 +1,12 @@
 import React, { PropTypes } from 'react';
 import s from './styles.css';
+import { connect } from 'react-redux';
 import Nav from '../../components/nav/landingNav'
 import Modal from '../../components/modal/index'
+
+import {logInWithFB} from '../../core/actions/user'
+import {updateAppState} from '../../core/actions/ui'
+import {APP_STATE} from '../../core/constants'
 
 class LandingPage extends React.Component {
 
@@ -16,6 +21,10 @@ class LandingPage extends React.Component {
   static propTypes = {
   };
 
+  componentWillMount() {
+    this.props.updateAppState();
+  }
+
   componentDidMount() {
   }
 
@@ -29,10 +38,11 @@ class LandingPage extends React.Component {
   render() {
     const {state,props,navOnClick} = this;
     const {joinButton,signInButton} = state;
+    const {logInWithFB} = props;
     return (
       <div>
         <Modal onClose={()=>{navOnClick(0,false)}} modalStatus={joinButton}>
-          <div>
+          <div onClick={logInWithFB}>
             Create with facebook
           </div>
         </Modal>
@@ -45,7 +55,27 @@ class LandingPage extends React.Component {
       </div>
     );
   }
-
 }
 
-export default LandingPage;
+const mapStateToProps = (state, ownProps) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    logInWithFB:()=>{
+      dispatch(logInWithFB())
+    },
+    updateAppState:()=>{
+      dispatch(updateAppState(APP_STATE.INDEX))
+    }
+  }
+}
+
+const LandingPageRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LandingPage)
+
+export default LandingPageRedux;

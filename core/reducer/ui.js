@@ -37,8 +37,8 @@ const actionToState = Map({
 export default function(state=defaultState,action) {
   switch (action.type) {
     case UPDATE_APP_STATE:
-      if(APP_STATE.has(action.appState))
-        return state.set(appState,action.appState)
+      if(APP_STATE[action.appState])
+        return state.set("appState",action.appState)
     case CREATE_DRAFT:
     case SAVE_DRAFT:
     case MOVE_GROUP:

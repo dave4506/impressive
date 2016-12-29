@@ -6,6 +6,8 @@ import {
   NETWORK_STATUS
 } from "../constants";
 
+import {simpleAction} from '../helper'
+
 import firebase from 'firebase';
 
 const db = firebase.database();
@@ -33,14 +35,14 @@ export const resetQuestion = () => {
 export const sendQuestion = () => {
   return (dispatch,getState) => {
     const { profile,question } = getState();
-    dispatch((()=>{type:SEND_QUESTION,status:NETWORK_STATUS.LOADING})())
+    dispatch(simpleAction({type:SEND_QUESTION,status:NETWORK_STATUS.LOADING}))
     const ref = db.ref(`/questions/${profile.id}/`);
     const key = ref.push().key;
     return db.ref(`/questions/${profile.id}/${key}`).set({question:question.question,email:question.email})
       .then(()=>{
-        dispatch((()=>{type:SEND_QUESTION,status:NETWORK_STATUS.SUCCESS})())
+        dispatch(simpleAction({type:SEND_QUESTION,status:NETWORK_STATUS.SUCCESS}))
       }).catch((error)=>{
-        dispatch((()=>{type:SEND_QUESTION,status:NETWORK_STATUS.ERROR,error})())
+        dispatch(simpleAction({type:SEND_QUESTION,status:NETWORK_STATUS.ERROR,error}))
       })
   }
 }
