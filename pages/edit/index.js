@@ -19,7 +19,7 @@ class EditPage extends React.Component {
   render() {
     return (
       <div>
-        <Layout mainPage={Mainpage()} sideBar={Sidebar()}/>
+        <Layout mainPage={Mainpage()} sideBar={<Sidebar/>}/>
       </div>
     );
   }

@@ -16,7 +16,7 @@ const defaultState = Map({
   subtext:"",
   link:"",
   shareLink:"",
-  photoURL:"",
+  photoURL:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fdefault-profile-pic.png?alt=media&token=3c36be23-f82e-45d9-aaec-6c4d66fbc16a",
   email:"",
   status:NETWORK_STATUS.INIT,
   saveStatus:NETWORK_STATUS.INIT

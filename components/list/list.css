@@ -35,11 +35,18 @@
 
 .list-header-link {
   opacity: 0.4;
+  transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.list-header-links {
   bottom:0;right:0;top:0;
   margin: auto;
   position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   padding: 2rem;
-  transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1);
+  flex-direction: column;
 }
 
 .list-header-profile {
