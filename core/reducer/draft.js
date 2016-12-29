@@ -6,10 +6,10 @@ import {
   NETWORK_STATUS
 } from "../constants"
 
-const defaultState = Map(
+const defaultState = Map({
   drafts:Map({}),
   status:NETWORK_STATUS.INIT
-)
+})
 
 export default function(state=defaultState,action) {
   switch (action.type) {

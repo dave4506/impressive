@@ -6,11 +6,11 @@ import {
   PULL_ARTICLES
 } from "../constants"
 
-const defaultState = Map(
+const defaultState = Map({
   articles:Map({}),
   status:NETWORK_STATUS.INIT,
   articleStatus:NETWORK_STATUS.INIT
-)
+})
 
 export default function(state=defaultState,action) {
   switch (action.type) {

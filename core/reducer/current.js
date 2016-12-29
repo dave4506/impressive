@@ -6,12 +6,12 @@ import {
   SET_CURRENT_ARTICLE
 } from "../constants"
 
-const defaultState = Map(
+const defaultState = Map({
   currentArticle:Map({}),
   currentDraft:Map({}),
   editable:false,
   status:NETWORK_STATUS.INIT
-)
+})
 
 export default function(state=defaultState,action) {
   switch (action.type) {

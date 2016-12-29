@@ -1,12 +1,16 @@
 .navbar {
+  box-sizing: border-box;
   height: 10rem;
   display: flex;
   align-items: center;
   padding: 0 6rem;
-  width: calc(100% - 12rem);
+  width: 100%;
   position: relative;
   z-index: 999;
   background-color: white;
+}
+
+.navbar-landing {
 }
 
 .dropdown *,
