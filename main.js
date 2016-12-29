@@ -19,10 +19,22 @@ import { Provider } from 'react-redux';
 import store from './core/store';
 import router from './core/router';
 import history from './core/history';
+import firebase from 'firebase';
+import {monitorLogIn} from './core/actions/user';
 
+var config = {
+  apiKey: "AIzaSyCMKqniQiTAeL4Ayd0xP-XtQynfHkG7L3I",
+  authDomain: "impresssive-86554.firebaseapp.com",
+  databaseURL: "https://impresssive-86554.firebaseio.com",
+  storageBucket: "impresssive-86554.appspot.com",
+  messagingSenderId: "102918285946"
+};
+
+firebase.initializeApp(config);
 let routes = require('./routes.json'); // Loaded with utils/routes-loader.js
 const container = document.getElementById('container');
 
+store.dispatch(monitorLogIn());
 function renderComponent(component) {
   ReactDOM.render(<Provider store={store}>{component}</Provider>, container);
 }

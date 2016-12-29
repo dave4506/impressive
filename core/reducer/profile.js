@@ -5,14 +5,19 @@ import {
   PULL_PROFILE,
   EDIT_PROFILE,
   SAVE_PROFILE,
-  NETWORK_STATUS
+  NETWORK_STATUS,
+  LOG_OUT,
+  LOG_IN,
+  USER_STATUS_CHANGE
 } from "../constants"
 
 const defaultState = Map({
-  name:"",
+  displayName:"",
   subtext:"",
   link:"",
   shareLink:"",
+  photoURL:"",
+  email:"",
   status:NETWORK_STATUS.INIT,
   saveStatus:NETWORK_STATUS.INIT
 })

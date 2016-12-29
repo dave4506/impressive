@@ -1,5 +1,6 @@
 import firebase from 'firebase'
-import {simpleAction} from '../helper'
+import {simpleAction} from '../helper';
+import {createProfile} from './profile';
 import {
   NETWORK_STATUS,
   LOG_IN,
@@ -12,6 +13,23 @@ import history from '../history'
 var provider = new firebase.auth.FacebookAuthProvider();
 provider.addScope('public_profile');
 
+const ifProfileExists = (user,dispatch) => {
+  const {photoURL,uid,displayName,email} = user;
+  return firebase.database().ref(`profiles/${uid}`).once("value").then((snapshot)=>{
+    return snapshot.val() != null;
+  }).then((exists)=> {
+    if(!exists)
+      dispatch(createProfile({
+        photoURL,
+        displayName,
+        subtext:"I'm a cool kid",
+        link:"",
+        shareLink:`impresssive.co/view?uid=${uid}`,
+        email
+      }))
+  });
+}
+
 export const logInWithFB = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.LOADING}))
@@ -19,6 +37,7 @@ export const logInWithFB = () => {
       const {photoURL,uid,displayName,email} = result.user;
       const user = {photoURL,uid,displayName,email}
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.SUCCESS,user}))
+      return ifProfileExists(user,dispatch)
     }).catch(function(error) {
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.ERROR,error}))
     });
@@ -43,6 +62,7 @@ export const monitorLogIn = () => {
       const ui = getState().get("ui");
       if (user) {
         dispatch(simpleAction({type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS,user}));
+        ifProfileExists(user,dispatch);
       } else {
         dispatch(simpleAction({type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS}));
       }
@@ -53,7 +73,6 @@ export const monitorLogIn = () => {
 
 export const handleUser = (state,exists,user) => {
   const location = history.getCurrentLocation();
-  console.log(location);
   if(exists) {
     if(state==APP_STATE.INDEX)
       history.push(`/edit?uid=${user.uid}`);
