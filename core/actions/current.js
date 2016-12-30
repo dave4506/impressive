@@ -42,8 +42,8 @@ export const setCurrentId = (id) => {
     const article = getState().get("article");
     const uid = getState().get("user").get("uid");
     const draft = getState().get("draft");
+    const articles = article.get("articles")
     const currentArticle = article.get("articles").get(id);
-    console.log("current",currentArticle);
     var draftId = currentArticle.get("currentDraft");
     const editable = uid == currentArticle.get("author");
     if(!editable) {
@@ -74,7 +74,6 @@ export const moveGroup = (from,to) => {
   }
 }
 
-// TODO: ADD a default editor state
 export const createDraft = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:CREATE_DRAFT,status:NETWORK_STATUS.LOADING}));
@@ -157,13 +156,15 @@ export const createArticle = (title) => {
     const newDraftId = database.ref(`drafts`).push().key;
     const newDraft = {editorState,articleId};
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {publicDraft:"none",currentDraft:newDraftId,title};
+    updates[`articles/${articleId}/`] = {author:uid,publicDraft:"none",currentDraft:newDraftId,title};
     updates[`drafts/${newDraftId}`] = newDraft;
     updates[`user_groups/${uid}/${GROUP_KEYS.NONE}/${articleId}`] = true;
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
       return updateLocalArticles(dispatch,getState);
-    }).then((a)=>{console.log("here?")}).catch((error)=>{
+    }).then((a)=>{
+      dispatch(setCurrentId(articleId));
+    }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })
   }

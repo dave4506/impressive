@@ -2,6 +2,7 @@ import {
   NETWORK_STATUS
 } from "./constants"
 
+import {Map} from 'immutable'
 import firebase from 'firebase'
 
 export const onSuccess = (action) => {
@@ -21,9 +22,9 @@ export const pullPromises = (ref,ids) => {
 export const convertToObject = (list,key) => {
   var obj = {};
   list.forEach((li)=>{
-    obj[li[key]] = li;
+    obj[li[key]] = Map(li);
   })
-  return obj;
+  return Map(obj);
 }
 
 export const simpleAction = (obj) => {

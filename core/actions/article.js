@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import {List} from 'immutable'
+import {Map} from 'immutable'
 import {simpleAction} from '../helper'
 import {
   PULL_ARTICLES,
@@ -47,7 +47,7 @@ export const pullArticles = () => {
       .then((articles)=>{
         dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:convertToObject(articles,"uid")}))
         dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.LOADING}));
-        return articles;
+        return articles
       })
       .then((a) => {
         return extractDraftIds(a,[],extractKey)})
