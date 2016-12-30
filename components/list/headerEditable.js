@@ -1,12 +1,60 @@
 import React, { PropTypes } from 'react';
 import s from './list.css';
 import ListItem from './listItem';
+import Image from '../image/image';
+import Loading from '../loader/simpleLoader';
 
-const Header = ({src,author,subtext,onClick,link}) => {
+import {connect} from 'react-redux';
+
+const Header = (props) => {
+  if(props.editable)
+    return <EditHeader {...props}/>
+  else
+    return <EditableHeader {...props}/>
+}
+
+class EditHeader extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const {photoStatus,editable,src,author,subtext,onClick,link,onChange} = this.props;
+    return (
+      <ListItem>
+        <div className={`${s["list-header"]}`}>
+          <div className={`${s["list-header-profile-wrapper"]}`}>
+            <div onClick={()=>{if(photoStatus!="LOADING") this.refs.fileUploader.click()}} className={`${s["list-header-profile-overlay"]}`}>
+              {(()=>{
+                if(photoStatus=="LOADING" || photoStatus=="ERROR")
+                  return <Loading width="28px" height="28px" color="#FFF" indicator={photoStatus}/>
+                else
+                  return <img width="28" height="28" src={require('./icons/profile.svg')}/>
+              })()}
+              <input accept="image/*" onChange={(e)=>{onChange(e.target.files[0],"photoURL")}} type="file" ref="fileUploader" style={{display: "none"}} />
+            </div>
+            <img className={`${s["list-header-profile"]}`} src={src}/>
+          </div>
+          <div className={`${s["list-header-input"]}`}>
+            <input placeholder="short bio of you" value={subtext} onChange={(e)=>{onChange(e.target.value,"subtext")}} type="text" className={`${s["list-header-input"]}`}/>
+            <input placeholder="link to your website" value={link} onChange={(e)=>{onChange(e.target.value,"link")}} type="text" className={`${s["list-header-input"]}`}/>
+          </div>
+          <div className={`${s["list-header-links"]}`}>
+            <svg className={`${s["list-header-link"]} ${s["list-header-link__"+(photoStatus=="LOADING" ? "disable":"enable")]}`} onClick={()=>{if(photoStatus!="LOADING") onClick("done")}} width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><title>theicons.co/svg/ui-21</title><desc>Created with Sketch.</desc><path d="M24 44c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20zm0-4c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16zm-4.414-8.586c.781.781 2.047.781 2.828 0l11-11c.781-.781.781-2.047 0-2.828-.781-.781-2.047-.781-2.828 0l-9.586 9.614-4.586-4.614c-.781-.781-2.047-.781-2.828 0-.781.781-.781 2.047 0 2.828l6 6z" fill="#000"/></svg>
+            <svg className={`${s["list-header-link"]}`} onClick={()=>{onClick("close")}} width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><title>theicons.co/svg/ui-24</title><desc>Created with Sketch.</desc><path d="M24 21.172l-4.956-4.956c-.779-.779-2.041-.775-2.822.006-.786.786-.784 2.045-.006 2.822l4.956 4.956-4.956 4.956c-.778.778-.78 2.036.006 2.822.781.781 2.043.785 2.822.006l4.956-4.956 4.956 4.956c.779.779 2.041.775 2.822-.006.786-.786.784-2.045.006-2.822l-4.956-4.956 4.956-4.956c.778-.778.78-2.036-.006-2.822-.781-.781-2.043-.785-2.822-.006l-4.956 4.956zm0 22.828c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20zm0-4c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16z" fill="#000"/></svg>
+          </div>
+        </div>
+      </ListItem>
+    )
+  }
+}
+
+const EditableHeader = ({editable,src,author,subtext,onClick,link}) => {
   return (
     <ListItem>
       <div className={`${s["list-header"]}`}>
-        <img className={`${s["list-header-profile"]}`} src={src}/>
+        <div className={`${s["list-header-profile-wrapper"]}`}>
+          <img className={`${s["list-header-profile"]}`} src={src}/>
+        </div>
         <div className={`${s["list-header-text"]}`}>
           <h1 className={`${s["list-header-author"]}`}>{author}</h1>
           <h4 className={`${s["list-header-subtext"]}`}>{subtext}</h4>
@@ -20,4 +68,20 @@ const Header = ({src,author,subtext,onClick,link}) => {
   )
 }
 
-export default Header;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    photoStatus:state.get("profile").get("photoStatus")
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+  }
+}
+
+const HeaderRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header)
+
+export default HeaderRedux;

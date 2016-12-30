@@ -17,6 +17,7 @@ export const PULL_PROFILE = "PULL_PROFILE";
 export const EDIT_PROFILE = "EDIT_PROFILE";
 export const SAVE_PROFILE = "SAVE_PROFILE";
 export const CREATE_PROFILE = "CREATE_PROFILE";
+export const PROFILE_PIC_UPLOAD = "PROFILE_PIC_UPLOAD";
 
 export const NETWORK_STATUS = {
   SUCCESS:"SUCCESS",

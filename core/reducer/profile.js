@@ -8,7 +8,8 @@ import {
   NETWORK_STATUS,
   LOG_OUT,
   LOG_IN,
-  USER_STATUS_CHANGE
+  USER_STATUS_CHANGE,
+  PROFILE_PIC_UPLOAD
 } from "../constants"
 
 const defaultState = Map({
@@ -19,6 +20,7 @@ const defaultState = Map({
   photoURL:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fdefault-profile-pic.png?alt=media&token=3c36be23-f82e-45d9-aaec-6c4d66fbc16a",
   email:"",
   status:NETWORK_STATUS.INIT,
+  photoStatus:NETWORK_STATUS.INIT,
   saveStatus:NETWORK_STATUS.INIT
 })
 
@@ -29,6 +31,9 @@ export default function(state=defaultState,action) {
       return  onSuccess(action) ? updatedStatus.merge(action.profile):updatedStatus;
     case EDIT_PROFILE:
       return state.merge(action.profile);
+    case PROFILE_PIC_UPLOAD:
+      const updatedProfileStatus = state.set("photoStatus",action.status);
+      return  onSuccess(action) ? updatedProfileStatus.set("photoURL",action.url):updatedProfileStatus;
     case SAVE_PROFILE:
       return state.set("saveStatus",action.status);
     default:

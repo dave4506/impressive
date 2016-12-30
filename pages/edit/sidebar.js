@@ -8,7 +8,9 @@ import Tabs from '../../components/list/tabs'
 import Collapse from '../../components/list/collapseListItem'
 import Article from '../../components/accordion/article'
 
-import {pullProfile} from '../../core/actions/profile'
+import {pullProfile,editProfile} from '../../core/actions/profile'
+import {uploadProfilePic} from '../../core/actions/file'
+import {Map} from 'immutable';
 import history from '../../core/history'
 
 const src = require('./profile.png');
@@ -17,7 +19,9 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editable:false
+      editable:false,
+      link:null,
+      subtext:null
     }
   }
 
@@ -26,17 +30,44 @@ class Sidebar extends React.Component {
   }
 
   onClick(btn) {
-    if(btn == "edit")
-      this.setState({editable:true});
+    console.log("btn:",btn);
+    if(btn == "edit") {
+      const {profile} = this.props;
+      this.setState({editable:true,link:profile.get("link"),subtext:profile.get("subtext")});
+    }
+    if(btn == "close")
+      this.setState({editable:false});
+    if(btn == "done") {
+      this.props.editProfile({link:this.state.link,subtext:this.state.subtext});
+      this.setState({editable:false});
+    }
+  }
+
+  onChange(value,key) {
+    console.log("change:",value,key);
+    var obj = {};
+    obj[key] = value
+    this.setState(obj);
+    if(key=="photoURL")
+      this.props.uploadProfilePic(value);
   }
 
   render() {
     const {state,props} = this;
     const {profile} = props;
+    const {editable,subtext,link} = state;
     return (
       <div className={`${s["side-bar"]}`}>
         <List>
-          <HeaderEditable onClick={this.onClick.bind(this)} src={profile.get("photoURL")} subtext={profile.get("subtext")} author={profile.get("displayName")} link={profile.get("link")}/>
+          <HeaderEditable
+            onChange={this.onChange.bind(this)}
+            editable={editable}
+            onClick={this.onClick.bind(this)}
+            src={profile.get("photoURL")}
+            subtext={editable ? subtext:profile.get("subtext")}
+            author={profile.get("displayName")}
+            link={editable ? link:profile.get("link")}
+          />
           <Tabs tabs={["Curated","All Articles"]} active={0}/>
           <Collapse defaultAccordion={true} title="This is me">
             <Article i={0} title="Hello World?" subText="this is cool..."/>
@@ -64,6 +95,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     pullProfile: ()=>{
       dispatch(pullProfile(history.getCurrentLocation().query.uid))
+    },
+    uploadProfilePic: (file)=>{
+      dispatch(uploadProfilePic(file));
+    },
+    editProfile: (profile)=>{
+      dispatch(editProfile(Map(profile)));
     }
   }
 }

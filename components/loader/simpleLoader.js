@@ -3,24 +3,24 @@ import s from './simpleLoader.css';
 
 const statusClass = (indicator) => {
   switch (indicator) {
-    case "loading":
+    case "LOADING":
       return s["simple-indicator__loading"]
-    case "success":
+    case "SUCCESS":
       return s["simple-indicator__success"]
-    case "error":
+    case "ERROR":
       return s["simple-indicator__error"]
-    case "warning":
+    case "WARNING":
       return s["simple-indicator__warning"]
-    case "disable":
+    case "DISABLE":
       return s["simple-indicator__disable"]
     default:
       return s["simple-indicator__default"]
   }
 }
 
-const StatusIndicator = ({indicator}) => {
+const StatusIndicator = ({width,height,color,indicator}) => {
   return (
-    <div className={`${s["simple-indicator"]} ${statusClass(indicator)}`}></div>
+    <div style={{width,height,backgroundColor:color}} className={`${s["simple-indicator"]} ${statusClass(indicator)}`}></div>
   )
 }
 

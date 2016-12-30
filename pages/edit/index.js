@@ -8,14 +8,11 @@ import {updateAppState} from '../../core/actions/ui'
 import {APP_STATE} from '../../core/constants'
 
 class EditPage extends React.Component {
-
   static propTypes = {
   };
-
   componentWillMount() {
     this.props.updateAppState();
   }
-
   render() {
     return (
       <div>
@@ -23,7 +20,6 @@ class EditPage extends React.Component {
       </div>
     );
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => {

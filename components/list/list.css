@@ -38,6 +38,35 @@
   transition: opacity 500ms cubic-bezier(0.2, 1, 0.3, 1);
 }
 
+.list-header-profile-wrapper {
+  position: relative;
+  height: 10rem;
+  width: 10rem;
+}
+
+.list-header-profile-overlay {
+  position: absolute;
+  top:0;bottom:0;left:0;right:0;
+  background-color: rgba(0,0,0,0.2);
+  display: flex;justify-content: center;align-items: center;
+}
+
+.list-header-input {
+  display: block;
+  padding: 1rem;
+}
+
+.list-header-input input {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.1rem;
+}
+
+.list-header-input input::-webkit-input-placeholder {
+  color: black;
+  opacity: 0.4;
+}
+
 .list-header-links {
   bottom:0;right:0;top:0;
   margin: auto;
@@ -53,6 +82,10 @@
   height: 10rem;
   width: 10rem;
   object-fit: cover;
+}
+
+.list-header-link__disable {
+  opacity: 0.4;
 }
 
 .list-header-link:hover {
