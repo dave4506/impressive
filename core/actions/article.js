@@ -1,9 +1,9 @@
 import firebase from 'firebase'
 import {List} from 'immutable'
-
+import {simpleAction} from '../helper'
 import {
   PULL_ARTICLES,
-  PULL_DRAFTS
+  PULL_DRAFTS,
   NETWORK_STATUS
 } from "../constants";
 
@@ -16,42 +16,51 @@ const database = firebase.database();
 
 const pullArticleIds = (id) => {
   return database.ref(`/user_articles/${id}/`).once('value').then((snapshot)=>{
-    const articleIds = List(snapshot.val());
+    return Object.keys(snapshot.val());
   })
 }
 
-const extractDraftIds = (articles,draftIds=[]) => {
+const extractDraftIds = (articles,draftIds=[],key="") => {
   if(articles.length == 0)
     return draftIds
   else {
-    const {currentDraft,publicDraft} = articles.pop();
-    return extractDraftIds(articles, draftIds.append( currentDraft == publicDraft ? [currentDraft]:[currentDraft,publicDraft]))
+    const article = articles.pop();
+    draftIds.push(article[key])
+    return extractDraftIds(articles,draftIds,key)
   }
 }
 
 export const pullArticles = () => {
   return (dispatch,getState) => {
-    dispatch((()=>{type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING})());
-    const {profile} = getState();
-    return pullArticleIds(profile.id)
+    dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING}));
+    const user = getState().get("user");
+    const appState = getState().get("ui").get("appState");
+    var extractKey = "";
+    if(appState == "VIEW" || appState == "EDIT")
+      extractKey="currentDraft";
+    else
+      extractKey="publicDraft";
+    return pullArticleIds(user.get("uid"))
       .then(ids=>{
         return Promise.all(pullPromises('/articles/',ids))
       })
       .then((articles)=>{
-        dispatch((()=>{type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:convertToObject(articles,"id")})())
-        dispatch((()=>{type:PULL_DRAFTS,status:NETWORK_STATUS.LOADING})());
+        dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:convertToObject(articles,"uid")}))
+        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.LOADING}));
         return articles;
       })
-      .then(extractDraftIds)
+      .then((a) => {
+        return extractDraftIds(a,[],extractKey)})
       .then(ids=>{
         return Promise.all(pullPromises('/drafts/',ids))
       })
       .then(drafts=>{
-        dispatch((()=>{type:PULL_DRAFTS,status:NETWORK_STATUS.SUCCESS,drafts:convertToObject(drafts,"id")})())
+        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.SUCCESS,drafts:convertToObject(drafts,"uid")}))
+        return drafts;
       })
       .catch((error)=>{
-        dispatch((()=>{type:PULL_ARTICLES,status:NETWORK_STATUS.ERROR,error})())
-        dispatch((()=>{type:PULL_DRAFTS,status:NETWORK_STATUS.ERROR,error})())
+        dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.ERROR,error}))
+        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.ERROR,error}))
       })
   }
 }

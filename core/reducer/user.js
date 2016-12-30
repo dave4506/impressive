@@ -9,7 +9,7 @@ import {
 } from "../constants"
 
 const defaultState = Map({
-  user:"",
+  uid:"",
   logInStatus:NETWORK_STATUS.INIT,
   logOutStatus:NETWORK_STATUS.INIT,
   userUpdateStatus:NETWORK_STATUS.INIT

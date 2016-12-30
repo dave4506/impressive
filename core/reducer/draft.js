@@ -15,7 +15,7 @@ export default function(state=defaultState,action) {
   switch (action.type) {
     case PULL_DRAFTS:
       const updatedStatus = state.set("status",action.status);
-      return onSuccess(action) ? updatedStatus.set("drafts",action.articleIds):updatedStatus;
+      return onSuccess(action) ? updatedStatus.set("drafts",action.drafts):updatedStatus;
     default:
       return state;
   }

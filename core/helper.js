@@ -12,7 +12,7 @@ export const pullPromises = (ref,ids) => {
   const database = firebase.database();
   const promises = ids.map((id)=>{
     return database.ref(ref).child(id).once('value').then((snapshot)=>{
-      return Object.assign({id:snapshot.key},snapshot.val());
+      return Object.assign({uid:snapshot.key},snapshot.val());
     })
   })
   return promises

@@ -14,9 +14,10 @@ class EditPage extends React.Component {
     this.props.updateAppState();
   }
   render() {
+    const {appState} = this.props;
     return (
       <div>
-        <Layout mainPage={Mainpage()} sideBar={<Sidebar/>}/>
+        <Layout mainPage={<Mainpage appState={appState}/>} sideBar={<Sidebar/>}/>
       </div>
     );
   }
@@ -24,6 +25,7 @@ class EditPage extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    appState:state.get("ui").get("appState")
   }
 }
 

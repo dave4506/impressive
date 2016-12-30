@@ -7,8 +7,12 @@ import {
 } from "../constants"
 
 const defaultState = Map({
-  currentArticle:Map({}),
-  currentDraft:Map({}),
+  article:Map({
+    uid:""
+  }),
+  draft:Map({
+    uid:""
+  }),
   editable:false,
   status:NETWORK_STATUS.INIT
 })
@@ -16,9 +20,9 @@ const defaultState = Map({
 export default function(state=defaultState,action) {
   switch (action.type) {
     case SET_CURRENT_ARTICLE:
-      const currentArticleSetted = state.set('currentArticle',action.article)
+      const currentArticleSetted = state.set('article',action.article)
       const currentEdit = state.set('editable',action.editable)
-      return currentEdit.set('currentDraft',action.draft)
+      return currentEdit.set('draft',action.draft)
     default:
       return state;
   }
