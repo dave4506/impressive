@@ -6,20 +6,23 @@ import Editor from '../../components/editor/editor'
 import View from '../../components/editor/view'
 import Image from '../../components/image/image'
 import Chatbar from './chatbar'
+import {connect} from 'react-redux';
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    const {appState} = this.props
+    const {appState,articles,drafts,current} = this.props
+    const currentArticle = current.get("article");
+    const currentDraft = current.get("draft");
     console.log("appstate",appState);
     return (
       <div className={`${s["main-page"]}`}>
         <div className={`${s["main-editor"]}`}>
           {(()=>{
             if(appState=="VIEW")
-              return <View Chatbar={Chatbar}/>
+              return <View article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
             else
               return <Editor/>
           })()}
@@ -29,7 +32,25 @@ class MainPage extends React.Component {
   }
 }
 
-export default MainPage
+const mapStateToProps = (state, ownProps) => {
+  return {
+    current:state.get("current"),
+    articles:state.get("article").get("articles"),
+    drafts:state.get("draft").get("drafts")
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+  }
+}
+
+const MainPageRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MainPage)
+
+export default MainPageRedux
 
 /*
 <Dropdown defaultAccordion={true} links={["flex","this is me","wow so cool!","deamn"]}/>

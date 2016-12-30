@@ -15,19 +15,11 @@ import {
   createEditorState,
 } from 'medium-draft';
 
-class EditorComponent extends React.Component {
+class ViewComponent extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      editorState: createEditorState(),
-      currentChatbar: {
-        type:"blank",
-        props: {}
-      },
-      prevChatbar: {
-        type:"blank",
-        props: {}
-      }
+      editorState: createEditorState()
     };
     this.onChange = (editorState) => this.setState({editorState});
   }
@@ -37,12 +29,13 @@ class EditorComponent extends React.Component {
   }
 
   render() {
-    const {Chatbar} = this.props;
+    const {Chatbar,article,draft} = this.props;
     const {editorState,currentChatbar} = this.state;
+    console.log("current art:",article,draft);
     return (
       <div className={`${s["editor"]}`}>
         <div className={`${s["editor-nav"]}`}>
-          <Nav title="introduction" rightInfo={"Up-to-date"} links={["follow author","share"]}/>
+          <Nav title="Article" rightInfo={"public"} links={["Edit","Move","Delete"]}/>
         </div>
         <div className={`${s["editor-wrapper"]}`}>
           <div className={`${s["editor-core-wrapper"]}`}>
@@ -67,4 +60,4 @@ class EditorComponent extends React.Component {
   }
 }
 
-export default EditorComponent;
+export default ViewComponent;

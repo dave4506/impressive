@@ -6,12 +6,14 @@ import Mainpage from './mainPage'
 import {connect} from 'react-redux';
 import {updateAppState} from '../../core/actions/ui'
 import {APP_STATE} from '../../core/constants'
+import {pullArticles} from '../../core/actions/article'
 
 class EditPage extends React.Component {
   static propTypes = {
   };
   componentWillMount() {
     this.props.updateAppState();
+    this.props.pullArticles();
   }
   render() {
     const {appState} = this.props;
@@ -33,6 +35,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateAppState:()=>{
       dispatch(updateAppState(APP_STATE.VIEW))
+    },
+    pullArticles: () => {
+      console.log("pulled called")
+      dispatch(pullArticles());
     }
   }
 }

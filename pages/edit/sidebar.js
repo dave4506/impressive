@@ -5,15 +5,32 @@ import Footer from '../../components/list/footer'
 import List from '../../components/list/list'
 import HeaderEditable from '../../components/list/headerEditable'
 import Tabs from '../../components/list/tabs'
+import Title from '../../components/list/title'
 import Collapse from '../../components/list/collapseListItem'
 import Article from '../../components/accordion/article'
 
+import {setCurrentId} from '../../core/actions/current'
 import {pullProfile,editProfile} from '../../core/actions/profile'
 import {uploadProfilePic} from '../../core/actions/file'
 import {Map} from 'immutable';
 import history from '../../core/history'
 
 const src = require('./profile.png');
+
+const Articles = ({articles,onArticleClick}) => {
+  return <div>
+    {Object.keys(articles).map((a,i)=>{
+      const article = articles[a];
+      return <Article
+          key={i}
+          i={i}
+          onClick={()=>{onArticleClick(article["uid"])}}
+          title={article["title"]}
+          subText="this is cool..."
+        />
+    })}
+  </div>
+}
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -26,6 +43,7 @@ class Sidebar extends React.Component {
   }
 
   componentWillMount() {
+    console.log("mounted?");
     this.props.pullProfile();
   }
 
@@ -43,6 +61,10 @@ class Sidebar extends React.Component {
     }
   }
 
+  onArticleClick(art) {
+    this.props.setCurrentId(art);
+  }
+
   onChange(value,key) {
     console.log("change:",value,key);
     var obj = {};
@@ -54,7 +76,7 @@ class Sidebar extends React.Component {
 
   render() {
     const {state,props} = this;
-    const {profile} = props;
+    const {profile,articles} = props;
     const {editable,subtext,link} = state;
     return (
       <div className={`${s["side-bar"]}`}>
@@ -68,11 +90,8 @@ class Sidebar extends React.Component {
             author={profile.get("displayName")}
             link={editable ? link:profile.get("link")}
           />
-          <Tabs tabs={["Curated","All Articles"]} active={0}/>
-          <Collapse defaultAccordion={true} title="This is me">
-            <Article i={0} title="Hello World?" subText="this is cool..."/>
-            <Article i={1} title="Hello World?" subText="this is cool..."/>
-          </Collapse>
+          <Title>This is Me</Title>
+          <Articles articles={articles.toJS()} onArticleClick={this.onArticleClick.bind(this)}/>
           <Footer>
             <div className={`${s["side-bar-footer-text"]}`}>
               <h3>impresssive.co</h3>
@@ -87,7 +106,9 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    profile:state.get("profile")
+    profile:state.get("profile"),
+    user:state.get("user"),
+    articles:state.get("article").get("articles")
   }
 }
 
@@ -101,6 +122,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     editProfile: (profile)=>{
       dispatch(editProfile(Map(profile)));
+    },
+    setCurrentId: (id) => {
+      dispatch(setCurrentId(id));
     }
   }
 }

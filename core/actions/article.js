@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import {Map} from 'immutable'
 import {simpleAction} from '../helper'
+import history from '../history';
 import {
   PULL_ARTICLES,
   PULL_DRAFTS,
@@ -33,14 +34,14 @@ const extractDraftIds = (articles,draftIds=[],key="") => {
 export const pullArticles = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING}));
-    const user = getState().get("user");
+    const userId = history.getCurrentLocation().query.uid;
     const appState = getState().get("ui").get("appState");
     var extractKey = "";
     if(appState == "VIEW" || appState == "EDIT")
       extractKey="currentDraft";
     else
       extractKey="publicDraft";
-    return pullArticleIds(user.get("uid"))
+    return pullArticleIds(userId)
       .then(ids=>{
         return Promise.all(pullPromises('/articles/',ids))
       })
