@@ -8,7 +8,7 @@ import inlineButtons from './inlineButtons'
 import linkComponent from './linkComponent'
 import sideButtons from './sideButtons'
 
-import {AtomicBlockUtils,convertToRaw} from 'draft-js';
+import {convertToRaw} from 'draft-js';
 
 import {
   Editor,
@@ -18,20 +18,19 @@ import {
 class ViewComponent extends React.Component {
   constructor(props){
     super(props)
-    this.state = {
-      editorState: createEditorState()
-    };
-    this.onChange = (editorState) => this.setState({editorState});
+    this.state={}
   }
 
-  componentDidMount() {
-    this.refs.editor.focus();
+  componentWillReceiveProps(nextProps) {
   }
 
   render() {
     const {Chatbar,article,draft} = this.props;
-    const {editorState,currentChatbar} = this.state;
-    console.log("current art:",article,draft);
+    const {} = this.state;
+    console.log("current art:",article,draft,draft.editorState);
+    const rawEditorState = draft.editorState;
+    if(rawEditorState.entityMap == null) rawEditorState.entityMap = {};
+    const editorState = createEditorState(rawEditorState);
     return (
       <div className={`${s["editor"]}`}>
         <div className={`${s["editor-nav"]}`}>
@@ -39,11 +38,10 @@ class ViewComponent extends React.Component {
         </div>
         <div className={`${s["editor-wrapper"]}`}>
           <div className={`${s["editor-core-wrapper"]}`}>
-            <input type="text" placeholder="A great story awaits" className={`${s["editor-introduction"]}`}/>
+            <h4 className={`${s["editor-introduction"]}`}>{article.title}</h4>
             <Editor
               ref="editor"
-              editorState={editorState}
-              onChange={this.onChange}
+              editorState={createEditorState()}
               placeholder="May the force be with you"
               sideButtons={sideButtons}
               blockButtons={blockButtons}
