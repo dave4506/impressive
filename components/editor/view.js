@@ -31,10 +31,11 @@ class ViewComponent extends React.Component {
     var rawEditorState = draft.editorState;
     if(rawEditorState.entityMap == null) rawEditorState.entityMap = {};
     const editorState = createEditorState(rawEditorState);
+    const status = article.currentDraft == article.publicDraft ? "public":"drafting";
     return (
       <div className={`${s["editor"]}`}>
         <div className={`${s["editor-nav"]}`}>
-          <Nav title="Article" rightInfo={"public"} links={["Edit","Move","Delete"]}/>
+          <Nav title="Article" rightInfo={status} links={["Edit","Delete"]}/>
         </div>
         <div className={`${s["editor-wrapper"]}`}>
           <div className={`${s["editor-core-wrapper"]}`}>

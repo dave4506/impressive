@@ -20,7 +20,7 @@ import store from './core/store';
 import router from './core/router';
 import history from './core/history';
 import firebase from 'firebase';
-import {logOut,currentUserStatus} from './core/actions/user';
+import {logOut,currentUserStatus,ifProfileExists} from './core/actions/user';
 
 var config = {
   apiKey: "AIzaSyCMKqniQiTAeL4Ayd0xP-XtQynfHkG7L3I",
@@ -56,13 +56,17 @@ const handleBeforeRender = (location) => {
       console.log("uid:",uid)
       if(uid) {
         if(uid == location.query.uid)
-          return true;
+          return ifProfileExists(uid).then((exists)=>{
+            if(!exists)
+              history.push(`/error?err=not_found`);              
+            return exists
+          });
         else {
-          history.push(`/?err=cant_access`);
+          history.push(`/error?err=cant_access`);
           return false;
         }
       } else {
-        history.push(`/?err=cant_access`);
+        history.push(`/error?err=cant_access`);
         return false;
       }
     })

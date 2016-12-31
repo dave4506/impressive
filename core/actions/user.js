@@ -13,21 +13,10 @@ import history from '../history'
 var provider = new firebase.auth.FacebookAuthProvider();
 provider.addScope('public_profile');
 
-const ifProfileExists = (user,dispatch) => {
-  const {photoURL,uid,displayName,email} = user;
+export const ifProfileExists = (uid) => {
   return firebase.database().ref(`profiles/${uid}`).once("value").then((snapshot)=>{
     return snapshot.val() != null;
-  }).then((exists)=> {
-    if(!exists)
-      dispatch(createProfile({
-        photoURL,
-        displayName,
-        subtext:"I'm a cool kid",
-        link:"",
-        shareLink:`impresssive.co/view?uid=${uid}`,
-        email
-      }))
-  });
+  })
 }
 
 export const logInWithFB = () => {
@@ -38,7 +27,17 @@ export const logInWithFB = () => {
       const user = {photoURL,uid,displayName,email}
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.SUCCESS,user}));
       history.push(`/edit?uid=${uid}`);
-      return ifProfileExists(user,dispatch)
+      return ifProfileExists(user.uid)
+    }).then((exists)=> {
+      if(!exists)
+        dispatch(createProfile({
+          photoURL,
+          displayName,
+          subtext:"I'm a cool kid",
+          link:"",
+          shareLink:`impresssive.co/view?uid=${uid}`,
+          email
+        }))
     }).catch(function(error) {
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.ERROR,error}))
     });

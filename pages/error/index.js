@@ -1,15 +1,20 @@
 import React, { PropTypes } from 'react';
-import s from './styles.css';
+import g from '../global.css';
+import s from './error.css';
 import history from '../../core/history';
 
 const errorMap = (error) => {
   switch (error) {
     case "cant_access":
       return {
-        bigText:"SORRY CAN'T TOUCH THAT",
+        bigText:"NOPE",
         smallText:"Bummer. You are accessing a page that isn't yours. If it is, try logging in again."
       }
-      break;
+    case "not_found":
+      return {
+        bigText:"404",
+        smallText:"Looks like that never existed. Shhhhh... "
+      }
     default:
       return {
         bigText:"Hmm?",
@@ -39,9 +44,10 @@ class ErrorPage extends React.Component {
     const {error} = state;
     const {bigText,smallText} = errorMap(error);
     return (
-      <div>
+      <div className={`${s["error-page"]}`}>
         <h1>{bigText}</h1>
         <h3>{smallText}</h3>
+        <button onClick={()=>{history.push('/')}} >Return to Safety</button>
       </div>
     );
   }

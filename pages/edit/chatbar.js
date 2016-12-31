@@ -26,7 +26,7 @@ class CreateChatbar extends React.Component {
     const {} = state;
     return (
       <div className={`${s["chat-bar"]}`}>
-        <Chatbar type="standardSingle" props={{onSubmit:this.onSubmit,placeholder:"Title of your latest spell binding peace"}}/>
+        <Chatbar type="standardSingle" props={{onSubmit:this.onSubmit,placeholder:"Title of your next spell binding piece"}}/>
       </div>
     )
   }

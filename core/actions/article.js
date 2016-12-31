@@ -41,8 +41,6 @@ export const pullArticles = () => {
       extractKey="currentDraft";
     else
       extractKey="publicDraft";
-    console.log("location:",history.getCurrentLocation());
-    console.log("pulling",appState,userId,extractKey);
     return pullArticleIds(userId)
       .then(ids=>{
         return Promise.all(pullPromises('/articles/',ids))
