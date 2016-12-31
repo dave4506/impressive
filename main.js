@@ -20,7 +20,7 @@ import store from './core/store';
 import router from './core/router';
 import history from './core/history';
 import firebase from 'firebase';
-import {monitorLogIn} from './core/actions/user';
+import {logOut,currentUserStatus} from './core/actions/user';
 
 var config = {
   apiKey: "AIzaSyCMKqniQiTAeL4Ayd0xP-XtQynfHkG7L3I",
@@ -34,17 +34,49 @@ firebase.initializeApp(config);
 let routes = require('./routes.json'); // Loaded with utils/routes-loader.js
 const container = document.getElementById('container');
 
-store.dispatch(monitorLogIn());
+//store.dispatch(logOut());
+
 function renderComponent(component) {
   ReactDOM.render(<Provider store={store}>{component}</Provider>, container);
 }
 
+const handleBeforeRender = (location) => {
+  if(location.pathname == '/')
+    return currentUserStatus().then((uid)=>{
+      console.log("uid:",uid)
+      if(uid) {
+        history.push(`/edit?uid=${uid}`);
+        return false;
+      } else {
+        return true;
+      }
+    })
+  if(location.pathname == '/edit')
+    return currentUserStatus().then((uid)=>{
+      console.log("uid:",uid)
+      if(uid) {
+        if(uid == location.query.uid)
+          return true;
+        else {
+          history.push(`/?err=cant_access`);
+          return false;
+        }
+      } else {
+        history.push(`/?err=cant_access`);
+        return false;
+      }
+    })
+  return Promise.resolve(true);
+}
 // Find and render a web page matching the current URL path,
 // if such page is not found then render an error page (see routes.json, core/router.js)
 function render(location) {
-  router.resolve(routes, location)
-    .then(renderComponent)
-    .catch(error => router.resolve(routes, { ...location, error }).then(renderComponent));
+  handleBeforeRender(location).then((renderable)=>{
+    if(renderable)
+      return router.resolve(routes, location)
+        .then(renderComponent)
+        .catch(error => router.resolve(routes, { ...location, error }).then(renderComponent));
+  })
 }
 
 // Handle client-side navigation by using HTML5 History API

@@ -36,7 +36,8 @@ export const logInWithFB = () => {
     firebase.auth().signInWithPopup(provider).then(function(result) {
       const {photoURL,uid,displayName,email} = result.user;
       const user = {photoURL,uid,displayName,email}
-      dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.SUCCESS,user}))
+      dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.SUCCESS,user}));
+      history.push(`/edit?uid=${uid}`);
       return ifProfileExists(user,dispatch)
     }).catch(function(error) {
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.ERROR,error}))
@@ -44,10 +45,16 @@ export const logInWithFB = () => {
   }
 }
 
+export const getCurrentUser = () => {
+  const {photoURL,uid,displayName,email} = firebase.auth().currentUser;
+  const user = {photoURL,uid,displayName,email}
+  return {type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS,user}
+}
+
 export const logOut = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.LOADING}))
-    firebase.auth().signOut().then(function() {
+    return firebase.auth().signOut().then(function() {
       dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.SUCCESS}))
     }, function(error) {
       dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.ERROR,error}))
@@ -55,32 +62,18 @@ export const logOut = () => {
   }
 }
 
-export const monitorLogIn = () => {
-  return (dispatch,getState) => {
-    dispatch(simpleAction({type:USER_STATUS_CHANGE,status:NETWORK_STATUS.LOADING}))
-    firebase.auth().onAuthStateChanged(function(user) {
-      const ui = getState().get("ui");
-      if (user) {
-        dispatch(simpleAction({type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS,user}));
-        ifProfileExists(user,dispatch);
-      } else {
-        dispatch(simpleAction({type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS}));
+export const currentUserStatus = () => {
+  return new Promise((res,rej)=>{
+    const unListen = firebase.auth().onAuthStateChanged(function(user,error,completed) {
+      if(error) {
+        unListen();
+        rej(err);
       }
-      handleUser(ui.get("appState"),user!=null,user);
+      if (user) {
+        res(user.uid);
+      } else {
+        res();
+      }
     });
-  }
-}
-
-export const handleUser = (state,exists,user) => {
-  const location = history.getCurrentLocation();
-  if(exists) {
-    if(state==APP_STATE.INDEX)
-      history.push(`/edit?uid=${user.uid}`);
-    if(state==APP_STATE.EDIT || state==APP_STATE.VIEW)
-      if(location.query.uid != user.uid)
-        history.push('/?err=cant_access');
-  } else {
-    if(state==APP_STATE.EDIT || state==APP_STATE.VIEW)
-      history.push('/?err=cant_access');
-  }
+  })
 }

@@ -16,14 +16,15 @@ class MainPage extends React.Component {
     const {appState,articles,drafts,current} = this.props
     const currentArticle = current.get("article");
     const currentDraft = current.get("draft");
-    console.log("appstate",appState);
+    console.log("@MainPage",appState)
     return (
       <div className={`${s["main-page"]}`}>
         <div className={`${s["main-editor"]}`}>
           {(()=>{
-            if(appState=="VIEW")
-              return <View article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
-            else
+            if(appState=="VIEW") {
+              if(currentDraft.toJS().editorState != null)
+                return <View article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
+            } else
               return <Editor/>
           })()}
         </div>

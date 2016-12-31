@@ -40,21 +40,20 @@ const updateLocalGroups = (dispatch,getState) => {
 export const setCurrentId = (id) => {
   return (dispatch,getState) => {
     const article = getState().get("article");
+    const appState = getState().get("ui").get("appState");
     const uid = getState().get("user").get("uid");
     const draft = getState().get("draft");
-    const articles = article.get("articles")
+    const articles = article.get("articles");
     const currentArticle = article.get("articles").get(id);
     var draftId = currentArticle.get("currentDraft");
-    const editable = uid == currentArticle.get("author");
-    if(!editable) {
+    if(appState=="PUBLIC") {
       draftId = currentArticle.get("publicDraft");
     }
     const currentDraft = draft.get("drafts").get(draftId);
     dispatch(simpleAction({
       type:SET_CURRENT_ARTICLE,
       article:currentArticle,
-      draft:currentDraft,
-      editable
+      draft:currentDraft
     }))
   }
 }

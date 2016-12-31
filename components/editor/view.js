@@ -27,8 +27,8 @@ class ViewComponent extends React.Component {
   render() {
     const {Chatbar,article,draft} = this.props;
     const {} = this.state;
-    console.log("current art:",article,draft,draft.editorState);
-    const rawEditorState = draft.editorState;
+    console.log("current art:",article,draft);
+    var rawEditorState = draft.editorState;
     if(rawEditorState.entityMap == null) rawEditorState.entityMap = {};
     const editorState = createEditorState(rawEditorState);
     return (
@@ -41,12 +41,11 @@ class ViewComponent extends React.Component {
             <h4 className={`${s["editor-introduction"]}`}>{article.title}</h4>
             <Editor
               ref="editor"
-              editorState={createEditorState()}
+              disableToolbar={true}
+              onChange={()=>{}}
+              editorEnabled={false}
+              editorState={editorState}
               placeholder="May the force be with you"
-              sideButtons={sideButtons}
-              blockButtons={blockButtons}
-              inlineButtons={inlineButtons}
-              linkComponent={linkComponent}
             />
           </div>
         </div>

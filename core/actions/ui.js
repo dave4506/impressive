@@ -12,6 +12,5 @@ export const updateAppState = (newAppState) => {
       type:UPDATE_APP_STATE,
       appState:newAppState
     }));
-    handleUser(newAppState,firebase.auth().currentUser != null,firebase.auth().currentUser);
   }
 }

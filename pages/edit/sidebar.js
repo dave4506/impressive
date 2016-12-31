@@ -43,7 +43,6 @@ class Sidebar extends React.Component {
   }
 
   componentWillMount() {
-    console.log("mounted?");
     this.props.pullProfile();
   }
 

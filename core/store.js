@@ -17,7 +17,11 @@ import {Map} from 'immutable';
 const middlewares = [thunk];
 
 if (process.env.NODE_ENV === `development`) {
-  const logger = createLogger();
+  const logger = createLogger({
+    stateTransformer:(state)=>{
+      return state.toJS();
+    }
+  });
   middlewares.push(logger);
 }
 
@@ -28,5 +32,4 @@ const initialState = Map();
 store = createStore(reducer,initialState,applyMiddleware(...middlewares));
 
 store.getState();
-
 export default store;
