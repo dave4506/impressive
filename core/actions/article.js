@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import {Map} from 'immutable'
-import {simpleAction} from '../helper'
 import history from '../history';
+import {switchCurrentToNext} from './current';
 import {
   PULL_ARTICLES,
   PULL_DRAFTS,
@@ -10,7 +10,8 @@ import {
 
 import {
   pullPromises,
-  convertToObject
+  convertToObject,
+  simpleAction
 } from "../helper"
 
 const database = firebase.database();
@@ -28,6 +29,14 @@ const extractDraftIds = (articles,draftIds=[],key="") => {
     const article = articles.pop();
     draftIds.push(article[key])
     return extractDraftIds(articles,draftIds,key)
+  }
+}
+
+export const pullArticlesAndSetCurrent = () => {
+  return (dispatch,getState) => {
+    return pullArticles()(dispatch,getState).then(()=>{
+      return switchCurrentToNext(dispatch,getState)
+    })
   }
 }
 

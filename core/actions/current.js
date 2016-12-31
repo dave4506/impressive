@@ -2,7 +2,9 @@ import firebase from 'firebase'
 import {List} from 'immutable'
 import {pullGroups} from './group'
 import {pullArticles} from './article'
+import {updateAppState} from './ui'
 import {simpleAction} from '../helper'
+
 import {
   createEditorState,
 } from 'medium-draft';
@@ -26,11 +28,7 @@ const database = firebase.database();
 const editorState = convertToRaw(createEditorState().getCurrentContent());
 
 const updateLocalArticles = (dispatch,getState) => {
-  return pullArticles()(dispatch,getState).then(()=>{
-    const current = getState().get("current");
-    if(current.get("article").get("uid") != "")
-      dispatch(setCurrentId(current.get("article").get("uid")))
-  })
+  return pullArticles()(dispatch,getState)
 }
 
 const updateLocalGroups = (dispatch,getState) => {
@@ -86,6 +84,8 @@ export const createDraft = () => {
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_DRAFT,status:NETWORK_STATUS.SUCCESS}))
       return updateLocalArticles(dispatch,getState)
+    }).then(()=>{
+      dispatch(updateAppState("EDIT"));
     }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_DRAFT,status:NETWORK_STATUS.ERROR,error}))
     })
@@ -130,12 +130,9 @@ export const deleteDraft = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:DELETE_DRAFT,status:NETWORK_STATUS.LOADING}));
     var updates = {};
-    const {profile,current} = getState();
-    const articleId = current.get("article").get("id");
+    const current = getState().get("current");
     const discardedDraftId = current.get("article").get("currentDraft");
-    const draftId = current.get("article").get("publishDraft");
-    updates[`articles/${articleId}/currentDraft`] = draftId;
-    updates[`drafts/${discardedDraftId}/`] = null;
+    updates[`drafts/${discardedDraftId}/editorState`] = editorState
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:DELETE_DRAFT,status:NETWORK_STATUS.SUCCESS}));
       return updateLocalArticles(dispatch,getState);
@@ -173,23 +170,33 @@ export const deleteArticle = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.LOADING}));
     var updates = {};
-    const {profile,current} = getState();
-    const articleId = current.get("article")
+    const uid = getState().get("user").get("uid");
+    const current = getState().get("current");
+    const articleId = current.get("article").get("uid");
     const currentDraftId = current.get("article").get("currentDraft");
     const publishDraftId = current.get("article").get("publishDraft");
-    const newDraft = {editorState:{},articleId};
-    updates[`user_articles/${profile.get("id")}/${articleId}`] = null;
+    updates[`user_articles/${uid}/${articleId}`] = null;
     updates[`articles/${articleId}/`] = null;
     updates[`drafts/${currentDraftId}`] = null;
     updates[`drafts/${publishDraftId}`] = null;
     Object.keys(GROUP_KEYS).map((k)=>{
-      updates[`user_groups/${profile.get("id")}/${k}/${articleId}`] = null
+      updates[`user_groups/${uid}/${k}/${articleId}`] = null
     })
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
       return updateLocalArticles(dispatch,getState);
+    }).then(()=>{
+      return switchCurrentToNext(dispatch,getState);
     }).catch((error)=>{
       dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })
   }
+}
+
+export const switchCurrentToNext = (dispatch,getState) => {
+  const articles = getState().get("article").get("articles").toJS();
+  if(Object.keys(articles).length == 0)
+    return createArticle("This is me.")(dispatch,getState)
+  else
+    return setCurrentId(Object.keys(articles)[0])(dispatch,getState);
 }

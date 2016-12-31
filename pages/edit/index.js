@@ -6,7 +6,7 @@ import Mainpage from './mainPage'
 import {connect} from 'react-redux';
 import {updateAppState} from '../../core/actions/ui'
 import {APP_STATE} from '../../core/constants'
-import {pullArticles} from '../../core/actions/article'
+import {pullArticlesAndSetCurrent} from '../../core/actions/article'
 import {getCurrentUser} from '../../core/actions/user'
 
 class EditPage extends React.Component {
@@ -15,7 +15,7 @@ class EditPage extends React.Component {
   componentWillMount() {
     this.props.getCurrentUser();
     this.props.updateAppState();
-    this.props.pullArticles();
+    this.props.pullArticlesAndSetCurrent();
   }
   render() {
     const {appState} = this.props;
@@ -41,8 +41,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateAppState:()=>{
       dispatch(updateAppState(APP_STATE.VIEW))
     },
-    pullArticles: () => {
-      dispatch(pullArticles());
+    pullArticlesAndSetCurrent: () => {
+      dispatch(pullArticlesAndSetCurrent());
     }
   }
 }

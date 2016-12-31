@@ -2,11 +2,13 @@ import React, { PropTypes } from 'react';
 import s from './editor.css';
 import Chatbar from '../chatbar'
 import Nav from '../nav/nav'
+import Dropdown from '../nav/dropdown'
 
 import blockButtons from './blockButtons'
 import inlineButtons from './inlineButtons'
 import linkComponent from './linkComponent'
 import sideButtons from './sideButtons'
+import {APP_STATE} from '../../core/constants'
 
 import {convertToRaw} from 'draft-js';
 
@@ -18,15 +20,48 @@ import {
 class ViewComponent extends React.Component {
   constructor(props){
     super(props)
-    this.state={}
+    this.state={
+      discardDropdown:false,
+      deleteConfirm:false
+    }
   }
 
   componentWillReceiveProps(nextProps) {
   }
 
+  navOnClick(i) {
+    console.log("nav:",i)
+    if(i==0) {
+      if(this.props.article.currentDraft == this.props.article.publicDraft)
+        this.props.createDraft()
+      else
+        this.props.updateAppState(APP_STATE.EDIT)
+    }
+    if(i==1)
+      this.setState({discardDropdown:!this.state.discardDropdown})
+  }
+
+  deleteOnClick(i) {
+    if(i==0)
+      this.setState({deleteConfirm:true,discardDropdown:false});
+    if(i==1) {
+      this.props.deleteDraft();
+      this.setState({deleteConfirm:false,discardDropdown:false})
+    }
+  }
+
+  confirmOnClick(i) {
+    if(i==1)
+      this.setState({deleteConfirm:false,discardDropdown:true})
+    if(i==0) {
+      this.props.deleteArticle();
+      this.setState({deleteConfirm:false,discardDropdown:false})
+    }
+  }
+
   render() {
     const {Chatbar,article,draft} = this.props;
-    const {} = this.state;
+    const {discardDropdown,deleteConfirm} = this.state;
     console.log("current art:",article,draft);
     var rawEditorState = draft.editorState;
     if(rawEditorState.entityMap == null) rawEditorState.entityMap = {};
@@ -35,7 +70,9 @@ class ViewComponent extends React.Component {
     return (
       <div className={`${s["editor"]}`}>
         <div className={`${s["editor-nav"]}`}>
-          <Nav title="Article" rightInfo={status} links={["Edit","Delete"]}/>
+          <Nav onClick={this.navOnClick.bind(this)} title="Article" rightInfo={status} links={["Edit","Delete"]}/>
+          <Dropdown onClick={this.deleteOnClick.bind(this)} accordion={discardDropdown} links={status=="drafting" ? ["delete article","discard draft"] : ["delete article"]}/>
+          <Dropdown onClick={this.confirmOnClick.bind(this)} accordion={deleteConfirm} links={["Are you sure?","Nah"]}/>
         </div>
         <div className={`${s["editor-wrapper"]}`}>
           <div className={`${s["editor-core-wrapper"]}`}>

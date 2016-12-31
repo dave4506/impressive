@@ -7,13 +7,27 @@ import View from '../../components/editor/view'
 import Image from '../../components/image/image'
 import Chatbar from './chatbar'
 import {connect} from 'react-redux';
+import {updateAppState} from '../../core/actions/ui';
+import {deleteArticle,createArticle,deleteDraft,createDraft} from '../../core/actions/current';
 
 class MainPage extends React.Component {
   constructor(props) {
     super(props);
   }
+
+  componentWillMount() {
+  }
+
   render() {
-    const {appState,articles,drafts,current} = this.props
+    const {
+      appState,
+      articles,
+      drafts,
+      current,
+      deleteArticle,
+      deleteDraft,
+      updateAppState,
+      createDraft} = this.props
     const currentArticle = current.get("article");
     const currentDraft = current.get("draft");
     console.log("@MainPage",appState)
@@ -23,7 +37,7 @@ class MainPage extends React.Component {
           {(()=>{
             if(appState=="VIEW") {
               if(currentDraft.toJS().editorState != null)
-                return <View article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
+                return <View createDraft={createDraft} updateAppState={updateAppState} deleteDraft={deleteDraft} deleteArticle={deleteArticle} article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
             } else
               return <Editor/>
           })()}
@@ -43,6 +57,21 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
+    deleteArticle: () => {
+      dispatch(deleteArticle());
+    },
+    deleteDraft: () => {
+      dispatch(deleteDraft());
+    },
+    createArticle: (title) => {
+      dispatch(createArticle(title));
+    },
+    updateAppState: (state) => {
+      dispatch(updateAppState(state));
+    },
+    createDraft: () => {
+      dispatch(createDraft());
+    }
   }
 }
 
