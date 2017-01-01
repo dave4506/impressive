@@ -28,11 +28,15 @@ class LandingPage extends React.Component {
   componentDidMount() {
   }
 
-  navOnClick(link,status) {
-    switch (link) {
-      case 0:this.setState({joinButton:status});break;
-      case 1:this.setState({signInButton:status});break;
-    }
+  navOnClick(from,link,status) {
+    if(from == "right")
+      switch (link) {
+        case 0:this.setState({signInButton:status});break;
+      }
+    if(from == "left")
+      switch (link) {
+        case 0:this.setState({joinButton:status});break;
+      }
   }
 
   render() {
@@ -51,7 +55,13 @@ class LandingPage extends React.Component {
             Sign in with facebook
           </div>
         </Modal>
-        <Nav onClick={(l)=>{navOnClick(l,true)}} title="impresssive.co" rightInfo={"A Download Horizons Project"} links={["Join Today","Sign In"]}/>
+        <Nav
+          title="impresssive.co"
+          linksR={["Sign in"]}
+          linksL={["Join Today"]}
+          onClickR={(i)=>{navOnClick("right",i,true)}}
+          onClickL={(i)=>{navOnClick("left",i,true)}}
+        />
       </div>
     );
   }

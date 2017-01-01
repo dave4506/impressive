@@ -10,6 +10,11 @@
     "chunk": "main"
   },
   {
+    "path": "/dashboard",
+    "page": "./pages/dashboard",
+    "chunk": "main"
+  },
+  {
     "path": "/edit",
     "page": "./pages/resumeEdit",
     "chunk": "main"

@@ -45,26 +45,30 @@ const handleBeforeRender = (location) => {
     return currentUserStatus().then((uid)=>{
       console.log("uid:",uid)
       if(uid) {
-        history.push(`/edit?uid=${uid}`);
+        history.push(`/dashboard?uid=${uid}`);
         return false;
       } else {
         return true;
       }
     })
-  if(location.pathname == '/edit')
+  if(location.pathname == '/edit' || location.pathname == '/dashboard')
     return currentUserStatus().then((uid)=>{
       console.log("uid:",uid)
       if(uid) {
-        if(uid == location.query.uid)
-          return ifProfileExists(uid).then((exists)=>{
-            if(!exists)
+        return ifProfileExists(uid).then((exists)=>{
+          if(!exists) {
+            history.push(`/error?err=not_found`);
+            return false
+          }
+          else {
+            if(uid == location.query.uid)
+              return true
+            else {
               history.push(`/error?err=not_found`);
-            return exists
-          });
-        else {
-          history.push(`/error?err=cant_access`);
-          return false;
-        }
+              return false
+            }
+          }
+        });
       } else {
         history.push(`/error?err=cant_access`);
         return false;
@@ -75,16 +79,12 @@ const handleBeforeRender = (location) => {
 // Find and render a web page matching the current URL path,
 // if such page is not found then render an error page (see routes.json, core/router.js)
 function render(location) {
-  /*
   handleBeforeRender(location).then((renderable)=>{
     if(renderable)
       return router.resolve(routes, location)
         .then(renderComponent)
         .catch(error => router.resolve(routes, { ...location, error }).then(renderComponent));
-  })*/
-  router.resolve(routes, location)
-    .then(renderComponent)
-    .catch(error => router.resolve(routes, { ...location, error }).then(renderComponent));
+  })
 }
 
 // Handle client-side navigation by using HTML5 History API

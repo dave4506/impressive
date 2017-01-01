@@ -5,6 +5,7 @@ export const APP_STATE = {
   VIEW:"VIEW",
   INDEX:"INDEX",
   PUBLIC:"PUBLIC",
+  DASHBOARD:"DASHBOARD",
   INIT:"INIT"
 }
 

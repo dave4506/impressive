@@ -1,0 +1,28 @@
+.block-project-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.block-project-img {
+  width: 50%;
+  height: auto;
+}
+
+.block-project-text-group {
+  text-align: left;
+  padding: 0 2rem;
+}
+
+.block-project-title {
+  font-family: 'Merriweather', serif;
+}
+
+.block-project-text {
+  font-weight: 400;
+  letter-spacing: normal;
+  margin:0;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+}

@@ -1,0 +1,33 @@
+.block-chat-bubble {
+  letter-spacing: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+  border-radius: 9999px;
+  padding: 1rem 1.5rem;
+  margin: 1rem;
+}
+
+.block-chat-bubble-wrapper {
+  display: flex;
+}
+
+.block-chat-bubble-wrapper__left {
+  flex-direction: row;
+}
+
+.block-chat-bubble-wrapper__right {
+  flex-direction: row-reverse;
+}
+
+.block-chat-bubble__left {
+  background-color: #E5E5EA;
+}
+
+.block-chat-bubble__right {
+  background-color: #1C85F6;
+  color:white;
+}
+
+.block-chatroom {
+  width: 30%;
+}

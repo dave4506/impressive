@@ -1,0 +1,10 @@
+.block-icon-row-gallery {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem 0;
+}
+
+.block-icon {
+  height: 4rem;
+  padding: 1rem;
+}

@@ -1,0 +1,22 @@
+.table-create {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.table-create input {
+  font-weight: 400;
+  letter-spacing: normal;
+  font-size: 1.3rem;
+  display: block;
+  width:100%;
+}
+
+.table-create svg {
+  position: absolute;
+  top:0;right:0;bottom:0;
+  display: flex;
+  padding: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  margin: auto;
+}

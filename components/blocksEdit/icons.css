@@ -1,0 +1,30 @@
+.block-icon {
+  padding: 1rem 0;
+}
+
+.block-icon-text-group {
+  padding-left: 1rem;
+}
+
+.block-icon-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin:0;
+  font-size: 1.2rem;
+  padding: 0.2rem;
+}
+
+.block-icon-text {
+  font-weight: 400;
+  letter-spacing: normal;
+  margin:0;
+  opacity:0.5;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+}
+
+.block-icon-img {
+  height: 5rem;
+  padding: 2rem;
+  width: auto;
+}

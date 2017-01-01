@@ -1,0 +1,15 @@
+.block-description-text {
+  text-align: justify;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 2.4rem;
+  font-size: 1.3rem;
+}
+
+.block-description-text:first-child:first-letter {
+  font-family: 'Merriweather', serif;
+  float: left;
+  font-size: 4rem;
+  line-height: 4rem;
+  padding: 0 1rem 0.5rem 0;
+}

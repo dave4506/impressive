@@ -26,7 +26,7 @@ export const logInWithFB = () => {
       const {photoURL,uid,displayName,email} = result.user;
       const user = {photoURL,uid,displayName,email}
       dispatch(simpleAction({type:LOG_IN,status:NETWORK_STATUS.SUCCESS,user}));
-      history.push(`/edit?uid=${uid}`);
+      history.push(`/dashboard?uid=${uid}`);
       return ifProfileExists(user.uid)
     }).then((exists)=> {
       if(!exists)

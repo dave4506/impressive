@@ -1,0 +1,15 @@
+.block-gallery-imgs {
+  padding: 1rem 0;
+  width:100%;
+}
+
+.block-gallery-imgs-img {
+  height: 30rem;
+  width: auto;
+  padding: 0;
+  margin: 0;
+}
+
+.block-gallery-imgs-img img {
+  height: 100%;
+}

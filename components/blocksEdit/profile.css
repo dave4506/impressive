@@ -1,0 +1,25 @@
+.block-profile  {
+
+}
+
+.block-profile-img {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.block-profile-name {
+  font-family: 'Merriweather', serif;
+  font-size: 3rem;
+  margin:0;
+  padding: 1rem;
+}
+
+.block-profile-description {
+  font-weight: 700;
+  letter-spacing: normal;
+  margin:0;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+}
