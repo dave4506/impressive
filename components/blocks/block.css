@@ -1,0 +1,43 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 0;
+  margin: auto;
+}
+
+.block__standard-width {
+  width: 60%;
+}
+
+.block__full-width {
+  width: 100%;
+}
+
+.block-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin:0;
+  font-size: 1.5rem;
+  padding: 1.5rem 1rem;
+}
+
+.block-columns {
+  display: flex;
+  flex-direction: row;
+}
+
+.block-column {
+  padding: 0 1.25rem;
+  width: 33.333%;
+}
+
+.block-caption {
+  font-weight: 400;
+  letter-spacing: normal;
+  margin:0;
+  opacity:0.5;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+}

@@ -1,0 +1,16 @@
+.side-bar {
+  width: 100%;
+  height:100%;
+  position: relative;
+}
+
+.side-bar-footer-text {
+  font-family: 'Merriweather', serif;
+  height: 8rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  opacity:0.5;
+}

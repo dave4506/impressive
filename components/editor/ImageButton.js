@@ -36,6 +36,7 @@ export default class ImageButton extends React.Component {
     }
     this.props.close();
   }
+
   render() {
     const Icon = icon('./icons/image.svg',"");
     return (

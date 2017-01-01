@@ -5,8 +5,13 @@
     "chunk": "main"
   },
   {
+    "path": "/resume",
+    "page": "./pages/resume",
+    "chunk": "main"
+  },
+  {
     "path": "/edit",
-    "page": "./pages/edit",
+    "page": "./pages/resumeEdit",
     "chunk": "main"
   },
   {

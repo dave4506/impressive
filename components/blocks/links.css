@@ -1,0 +1,31 @@
+.block-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.block-link-text-group {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.block-link-title {
+  font-weight: 700;
+  text-transform: uppercase;
+  margin:0;
+  font-size: 1.2rem;
+  padding: 0.2rem;
+}
+
+.block-link-text {
+  font-weight: 400;
+  letter-spacing: normal;
+  margin:0;
+  opacity:0.5;
+  font-size: 1.2rem;
+  padding: 0.4rem;
+}
+
+.block-link-number {
+  font-family: 'Merriweather', serif;
+}
