@@ -5,7 +5,7 @@
     "chunk": "main"
   },
   {
-    "path": "/resume",
+    "path": "/enjoy",
     "page": "./pages/resume",
     "chunk": "main"
   },

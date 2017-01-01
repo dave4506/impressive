@@ -18,7 +18,7 @@ const database = firebase.database();
 
 const pullArticleIds = (id) => {
   return database.ref(`/user_articles/${id}/`).once('value').then((snapshot)=>{
-    return Object.keys(snapshot.val());
+    return Object.keys(snapshot.val() || {});
   })
 }
 
@@ -56,21 +56,7 @@ export const pullArticles = () => {
       })
       .then((articles)=>{
         dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:convertToObject(articles,"uid")}))
-        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.LOADING}));
         return articles
-      })
-      .then((a) => {
-        return extractDraftIds(a,[],extractKey)})
-      .then(ids=>{
-        return Promise.all(pullPromises('/drafts/',ids))
-      })
-      .then(drafts=>{
-        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.SUCCESS,drafts:convertToObject(drafts,"uid")}))
-        return drafts;
-      })
-      .catch((error)=>{
-        dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.ERROR,error}))
-        dispatch(simpleAction({type:PULL_DRAFTS,status:NETWORK_STATUS.ERROR,error}))
       })
   }
 }

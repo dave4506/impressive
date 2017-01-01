@@ -4,6 +4,8 @@ import {pullGroups} from './group'
 import {pullArticles} from './article'
 import {updateAppState} from './ui'
 import {simpleAction} from '../helper'
+import history from '../history'
+import shortid from 'shortid';
 
 import {
   createEditorState,
@@ -37,21 +39,9 @@ const updateLocalGroups = (dispatch,getState) => {
 
 export const setCurrentId = (id) => {
   return (dispatch,getState) => {
-    const article = getState().get("article");
-    const appState = getState().get("ui").get("appState");
-    const uid = getState().get("user").get("uid");
-    const draft = getState().get("draft");
-    const articles = article.get("articles");
-    const currentArticle = article.get("articles").get(id);
-    var draftId = currentArticle.get("currentDraft");
-    if(appState=="PUBLIC") {
-      draftId = currentArticle.get("publicDraft");
-    }
-    const currentDraft = draft.get("drafts").get(draftId);
     dispatch(simpleAction({
       type:SET_CURRENT_ARTICLE,
-      article:currentArticle,
-      draft:currentDraft
+      articleId:id
     }))
   }
 }
@@ -146,20 +136,18 @@ export const createArticle = (title) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.LOADING}));
     var updates = {};
-    const user = getState().get("user");
-    const uid = user.get("uid");
+    const uid = history.getCurrentLocation().query.uid;
     const articleId = database.ref('/articles').push().key
     const newDraftId = database.ref(`drafts`).push().key;
     const newDraft = {editorState,articleId};
+    const shortId = shortid.generate()
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {author:uid,publicDraft:"none",currentDraft:newDraftId,title};
-    updates[`drafts/${newDraftId}`] = newDraft;
-    updates[`user_groups/${uid}/${GROUP_KEYS.NONE}/${articleId}`] = true;
+    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId};
+    updates[`shorten/${shortId}`] = articleId
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
-      return updateLocalArticles(dispatch,getState);
-    }).then((a)=>{
       dispatch(setCurrentId(articleId));
+      history.push(`/edit?uid=${uid}&aid=${shortId}`)
       dispatch(updateAppState("EDIT"));
     }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
@@ -167,27 +155,18 @@ export const createArticle = (title) => {
   }
 }
 
-export const deleteArticle = () => {
+export const deleteArticle = (article) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.LOADING}));
     var updates = {};
-    const uid = getState().get("user").get("uid");
+    const uid = history.getCurrentLocation().query.uid;
     const current = getState().get("current");
-    const articleId = current.get("article").get("uid");
-    const currentDraftId = current.get("article").get("currentDraft");
-    const publishDraftId = current.get("article").get("publishDraft");
-    updates[`user_articles/${uid}/${articleId}`] = null;
-    updates[`articles/${articleId}/`] = null;
-    updates[`drafts/${currentDraftId}`] = null;
-    updates[`drafts/${publishDraftId}`] = null;
-    Object.keys(GROUP_KEYS).map((k)=>{
-      updates[`user_groups/${uid}/${k}/${articleId}`] = null
-    })
+    updates[`user_articles/${uid}/${article.uid}`] = null;
+    updates[`articles/${article.uid}/`] = null;
+    updates[`shorten/${article.shortId}`] = null;
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
       return updateLocalArticles(dispatch,getState);
-    }).then(()=>{
-      return switchCurrentToNext(dispatch,getState);
     }).catch((error)=>{
       dispatch(simpleAction({type:DELETE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })

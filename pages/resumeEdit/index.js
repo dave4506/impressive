@@ -45,7 +45,7 @@ class ResumeEdit extends React.Component {
     console.log("why?")
     return (
       <div>
-        <Nav title="impresssive.co" linksR={["Sign out","Back"]} linksL={["Save","Delete"]}/>
+        <Nav title="impresssive.co" linksL={["Sign out","Back"]} linksR={["Save","Delete"]}/>
         <Profile
           onChange={onChange}
           profileSrc="https://scontent.fsnc1-1.fna.fbcdn.net/v/t1.0-9/12243285_935156856558785_6064119464102764675_n.jpg?oh=bb2385615c425130a9e0dc75c85c873f&oe=58DECFF9"

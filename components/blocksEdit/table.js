@@ -22,8 +22,8 @@ class Table extends React.Component {
             <p className={`${s["block-table-row-text"]}`}>{t.text}</p>
             <p className={`${s["block-table-row-subtext"]}`}>{t.subtext}</p>
             <div className={`${s["block-table-row-modifier"]}`}>
-              {modifiers.map((m,i)=>{
-                return <button key={i} onClick={()=>{onModifier(m,i)}}>{m}</button>
+              {modifiers.map((m,mi)=>{
+                return <button key={mi} onClick={()=>{onModifier(m,i)}}>{m}</button>
               })}
             </div>
           </div>

@@ -1,6 +1,7 @@
 import firebase from 'firebase'
 import {simpleAction} from '../helper';
 import {createProfile} from './profile';
+
 import {
   NETWORK_STATUS,
   LOG_IN,
