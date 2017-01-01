@@ -160,6 +160,7 @@ export const createArticle = (title) => {
       return updateLocalArticles(dispatch,getState);
     }).then((a)=>{
       dispatch(setCurrentId(articleId));
+      dispatch(updateAppState("EDIT"));
     }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })

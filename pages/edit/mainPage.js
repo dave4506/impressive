@@ -35,11 +35,12 @@ class MainPage extends React.Component {
       <div className={`${s["main-page"]}`}>
         <div className={`${s["main-editor"]}`}>
           {(()=>{
-            if(appState=="VIEW") {
-              if(currentDraft.toJS().editorState != null)
-                return <View createDraft={createDraft} updateAppState={updateAppState} deleteDraft={deleteDraft} deleteArticle={deleteArticle} article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
-            } else
-              return <Editor/>
+            if(currentDraft.toJS().editorState != null)
+              if(appState=="VIEW") {
+                  return <View createDraft={createDraft} updateAppState={updateAppState} deleteDraft={deleteDraft} deleteArticle={deleteArticle} article={currentArticle.toJS()} draft={currentDraft.toJS()} Chatbar={Chatbar}/>
+              } else {
+                  return <Editor createDraft={createDraft} updateAppState={updateAppState} deleteDraft={deleteDraft} deleteArticle={deleteArticle} article={currentArticle.toJS()} draft={currentDraft.toJS()}/>
+              }
           })()}
         </div>
       </div>

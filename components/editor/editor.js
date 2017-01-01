@@ -7,6 +7,7 @@ import blockButtons from './blockButtons'
 import inlineButtons from './inlineButtons'
 import linkComponent from './linkComponent'
 import sideButtons from './sideButtons'
+import Dropdown from '../nav/dropdown'
 
 import {AtomicBlockUtils} from 'draft-js';
 
@@ -19,15 +20,8 @@ class EditorComponent extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      editorState: createEditorState(),
-      currentChatbar: {
-        type:"blank",
-        props: {}
-      },
-      prevChatbar: {
-        type:"blank",
-        props: {}
-      }
+      discardDropdown:false,
+      deleteConfirm:false
     };
     this.onChange = (editorState) => this.setState({editorState});
   }
@@ -36,17 +30,51 @@ class EditorComponent extends React.Component {
     this.refs.editor.focus();
   }
 
+  navOnClick(i) {
+    console.log("nav:",i)
+    if(i==0) {
+    }
+    if(i==2)
+      this.setState({discardDropdown:!this.state.discardDropdown})
+  }
+
+  deleteOnClick(i) {
+    if(i==0)
+      this.setState({deleteConfirm:true,discardDropdown:false});
+    if(i==1) {
+      this.props.deleteDraft();
+      this.setState({deleteConfirm:false,discardDropdown:false})
+    }
+  }
+
+  confirmOnClick(i) {
+    if(i==1)
+      this.setState({deleteConfirm:false,discardDropdown:true})
+    if(i==0) {
+      this.props.deleteArticle();
+      this.setState({deleteConfirm:false,discardDropdown:false})
+    }
+  }
+
   render() {
-    const {} = this.props;
-    const {editorState,currentChatbar} = this.state;
+    const {article,draft} = this.props;
+    const {discardDropdown,deleteConfirm} = this.state;
+    console.log("current art:",article,draft);
+    var rawEditorState = draft.editorState;
+    if(rawEditorState.entityMap == null) rawEditorState.entityMap = {};
+    const editorState = createEditorState(rawEditorState);
+    const status = article.currentDraft == article.publicDraft ? "public":"drafting";
+    console.log(editorState,status);
     return (
       <div className={`${s["editor"]}`}>
         <div className={`${s["editor-nav"]}`}>
-          <Nav title="introduction" rightInfo={"Up-to-date"} links={["follow author","share"]}/>
+          <Nav onClick={this.navOnClick.bind(this)} title="Article" rightInfo={status} links={["Publish","Done","Delete"]}/>
+          <Dropdown onClick={this.deleteOnClick.bind(this)} accordion={discardDropdown} links={status=="drafting" ? ["delete article","discard draft"] : ["delete article"]}/>
+          <Dropdown onClick={this.confirmOnClick.bind(this)} accordion={deleteConfirm} links={["Are you sure?","Nah"]}/>
         </div>
         <div className={`${s["editor-wrapper"]}`}>
           <div className={`${s["editor-core-wrapper"]}`}>
-            <input type="text" placeholder="A great story awaits" className={`${s["editor-introduction"]}`}/>
+            <input value={article.title} type="text" placeholder="A great story awaits" className={`${s["editor-introduction"]}`}/>
             <Editor
               ref="editor"
               editorState={editorState}
@@ -60,7 +88,7 @@ class EditorComponent extends React.Component {
           </div>
         </div>
         <div className={`${s["editor-chatbar"]}`}>
-          <Chatbar {...currentChatbar} />
+          <Chatbar type="blank" />
         </div>
       </div>
     )
