@@ -171,7 +171,7 @@ export const createArticle = () => {
     const articleId = database.ref('/articles').push().key
     const shortId = shortid.generate()
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:[]};
+    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:[],public:false};
     updates[`shorten/${shortId}`] = articleId
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
