@@ -39,7 +39,7 @@ class Add extends React.Component {
           </div>
           <div className={`${s["block-buttons-row"]}`}>
             <div onClick={()=>{onClick("QUOTE")}}>
-              <img data-tip data-for='quoteAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Ftech-06.svg?alt=media&token=e24e6de9-c462-4722-b656-329490ec472f"/>
+              <img data-tip data-for='quoteAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Ftext-06.svg?alt=media&token=41175253-946b-4a43-9fa0-4caaaf5b639b"/>
               <ReactTooltip place="bottom" id='quoteAddButton' effect='solid'>
                 <span className={`${b["block-tooltip"]}`}>Quote</span>
               </ReactTooltip>
@@ -82,6 +82,18 @@ class Add extends React.Component {
               <img data-tip data-for='iconsAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032"/>
               <ReactTooltip place="bottom" id='iconsAddButton' effect='solid'>
                 <span className={`${b["block-tooltip"]}`}>Icons Row</span>
+              </ReactTooltip>
+            </div>
+            <div>
+              <img data-tip data-for='lineBreakAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fcommon-04.svg?alt=media&token=b1a6bf92-0ff0-4c3d-b3d7-118b31184c95"/>
+              <ReactTooltip place="bottom" id='lineBreakAddButton' effect='solid'>
+                <span className={`${b["block-tooltip"]}`}>Line Break</span>
+              </ReactTooltip>
+            </div>
+            <div>
+              <img data-tip data-for='headerAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Ftext-04.svg?alt=media&token=d1083413-6720-4fe9-bb26-77eedcf2564b"/>
+              <ReactTooltip place="bottom" id='headerAddButton' effect='solid'>
+                <span className={`${b["block-tooltip"]}`}>Header Text</span>
               </ReactTooltip>
             </div>
           </div>

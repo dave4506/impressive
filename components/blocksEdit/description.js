@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './description.css';
 import Columns from './columns'
+import Tools from '../tools';
 
 const descriptionText = (text) => {
   return <p className={`${s["block-description-text"]}`}>

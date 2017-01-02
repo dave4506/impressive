@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './iconRow.css';
+import Tools from '../tools';
 
 class IconRow extends React.Component {
   constructor(props) {

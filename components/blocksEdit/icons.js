@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './icons.css';
 import Columns from './columns'
+import Tools from '../tools';
 
 const icon = ({icon,title,text,link}) => {
   return <div className={`${s["block-icon"]}`}>

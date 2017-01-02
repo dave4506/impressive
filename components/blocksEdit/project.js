@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './project.css';
+import Tools from '../tools';
 
 class Project extends React.Component {
   constructor(props) {

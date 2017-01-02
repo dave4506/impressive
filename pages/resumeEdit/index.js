@@ -14,7 +14,7 @@ import history from '../../core/history'
 import { BLOCKS } from '../../core/constants'
 import {Block,defaultBlockProps} from '../blocks'
 
-const Article = ({article,onChange,onAddClick}) => {
+const Article = ({article,onChange,onAddClick,onToolClick}) => {
   return (
     <div>
       <Input
@@ -23,10 +23,10 @@ const Article = ({article,onChange,onAddClick}) => {
         value={article.title}
         description="A title is the beginning of a sharing."
       />
-      <Add hidden={false} onClick={onAddClick(0)}/>
       {article.editorState.map((b,i)=>{
-        return <BlockEditor onAddClick={onAddClick(i+1)} block={b}/>
+        return <BlockEditor key={i} onToolClick={onToolClick(i)} onChange={onChange(i)} onAddClick={onAddClick(i)} block={b}/>
       })}
+      <Add hidden={false} onClick={onAddClick(article.editorState.length)}/>
     </div>
   )
 }
@@ -37,12 +37,11 @@ class BlockEditor extends React.Component {
     this.state = {mouseHover:true}
   }
   render() {
-    const {onAddClick,block} = this.props;
+    const {onChange,onAddClick,block,onToolClick} = this.props;
     const {mouseHover} = this.state;
-    console.log(mouseHover);
     return <div onMouseOver={()=>{this.setState({mouseHover:false})}} onMouseOut={()=>{this.setState({mouseHover:true})}}>
-      <Block type={block.type} edit={true} props={block.props}/>
       <Add hidden={mouseHover} onClick={onAddClick}/>
+      <Block type={block.type} edit={true} props={Object.assign({onChange,onToolClick},block.props)}/>
     </div>
   }
 }
@@ -68,6 +67,7 @@ class ResumeEdit extends React.Component {
     }
     this.onChange = this.onChange.bind(this);
     this.onAddClick = this.onAddClick.bind(this);
+    this.onToolClick = this.onToolClick.bind(this);
   }
 
   static propTypes = {
@@ -97,8 +97,17 @@ class ResumeEdit extends React.Component {
     }
   }
 
+  onToolClick(index) {
+    return (type) => {
+      const editorState = this.props.article.get("editorState");
+      if(type == "DELETE")
+        editorState.splice(index,1)
+        this.props.saveArticleState(editorState);
+    }
+  }
+
   render() {
-    const {state,props,onChange,onAddClick} = this;
+    const {state,props,onChange,onAddClick,onToolClick} = this;
     const {article,status} = props;
     return (
       <div>
@@ -109,7 +118,7 @@ class ResumeEdit extends React.Component {
         {(()=>{
           if(article != null);
             if(article.get("uid") != null)
-              return <Article article={article.toJS()} onChange={onChange} onAddClick={onAddClick}/>
+              return <Article onToolClick={onToolClick} article={article.toJS()} onChange={onChange} onAddClick={onAddClick}/>
         })()}
       </div>
     );

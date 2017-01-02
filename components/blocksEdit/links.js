@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './links.css';
 import Columns from './columns'
+import Tools from '../tools';
 
 const link = ({title,text,link},i) => {
   return <div className={`${s["block-link"]}`}>

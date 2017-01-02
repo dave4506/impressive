@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Slider from 'react-slick';
 import b from './block.css';
 import s from './header.css';
+import Tools from '../tools';
 
 class Header extends React.Component {
   constructor(props) {

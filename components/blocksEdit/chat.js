@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './chat.css';
+import Tools from '../tools';
 
 class Chat extends React.Component {
   constructor(props) {

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './table.css';
+import Tools from '../tools';
 
 class Table extends React.Component {
   constructor(props) {

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Slider from 'react-slick';
 import b from './block.css';
 import s from './gallery.css';
+import Tools from '../tools';
 
 class Gallery extends React.Component {
   constructor(props) {

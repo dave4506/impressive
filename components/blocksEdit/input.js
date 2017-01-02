@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import Slider from 'react-slick';
 import b from './block.css';
 import s from './input.css';
+import Tools from '../tools';
 
 class Input extends React.Component {
   constructor(props) {

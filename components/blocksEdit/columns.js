@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Slider from 'react-slick';
 import b from './block.css';
+import Tools from '../tools';
 
 class Columns extends React.Component {
   constructor(props) {
