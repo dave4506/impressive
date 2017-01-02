@@ -15,8 +15,8 @@ const defaultState = Map({
 export default function(state=defaultState,action) {
   switch (action.type) {
     case PULL_ARTICLES:
-      const updatedArticleStatus = state.set("status",action.status);
-      return onSuccess(action) ? updatedArticleStatus.set("articles",action.articles):updatedArticleStatus;
+      const updatedArticlesStatus = state.set("status",action.status);
+      return onSuccess(action) ? updatedArticlesStatus.set("articles",action.articles):updatedArticlesStatus;
     default:
       return state;
   }

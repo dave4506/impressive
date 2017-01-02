@@ -21,6 +21,7 @@ import {
   PUBLISH_DRAFT,
   DELETE_DRAFT,
   CREATE_ARTICLE,
+  SAVE_ARTICLE,
   DELETE_ARTICLE,
   GROUP_KEYS
 } from "../constants";
@@ -37,11 +38,11 @@ const updateLocalGroups = (dispatch,getState) => {
   return pullGroups()(dispatch,getState);
 }
 
-export const setCurrentId = (id) => {
+export const setCurrent = (id) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({
       type:SET_CURRENT_ARTICLE,
-      articleId:id
+      article:getState().get("article").get("articles").get(id)
     }))
   }
 }
@@ -76,6 +77,7 @@ export const createDraft = () => {
       return updateLocalArticles(dispatch,getState)
     }).then(()=>{
       dispatch(updateAppState("EDIT"));
+      dispatch(setCurrent(articleId));
     }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_DRAFT,status:NETWORK_STATUS.ERROR,error}))
     })
@@ -132,17 +134,44 @@ export const deleteDraft = () => {
   }
 }
 
-export const createArticle = (title) => {
+export const saveArticleTitle = (title) => {
+  return (dispatch,getState) => {
+    dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.LOADING,title}));
+    var updates = {};
+    const articleId = getState().get("current").get("article").get("uid")
+    updates[`articles/${articleId}/title`] = title
+    console.log(articleId,title)
+    return database.ref().update(updates).then(()=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,title}));
+    }).catch((error)=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
+    })
+  }
+}
+
+export const saveArticleState = (editorState) => {
+  return (dispatch,getState) => {
+    dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.LOADING,editorState}));
+    var updates = {};
+    const articleId = getState().get("current").get("article").get("uid")
+    updates[`articles/${articleId}/editorState`] = editorState
+    return database.ref().update(updates).then(()=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,editorState}));
+    }).catch((error)=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
+    })
+  }
+}
+
+export const createArticle = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.LOADING}));
     var updates = {};
     const uid = history.getCurrentLocation().query.uid;
     const articleId = database.ref('/articles').push().key
-    const newDraftId = database.ref(`drafts`).push().key;
-    const newDraft = {editorState,articleId};
     const shortId = shortid.generate()
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId};
+    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:[]};
     updates[`shorten/${shortId}`] = articleId
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));

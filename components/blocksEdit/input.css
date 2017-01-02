@@ -1,0 +1,10 @@
+.block-input input {
+  font-size: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.block-input {
+  width: 100%;
+  padding: 1rem 0;
+}

@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import {Map} from 'immutable'
 import history from '../history';
-import {switchCurrentToNext} from './current';
+import {setCurrent} from './current';
 import {
   PULL_ARTICLES,
   PULL_DRAFTS,
@@ -44,12 +44,6 @@ export const pullArticles = () => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING}));
     const userId = history.getCurrentLocation().query.uid;
-    const appState = getState().get("ui").get("appState");
-    var extractKey = "";
-    if(appState == "VIEW" || appState == "EDIT")
-      extractKey="currentDraft";
-    else
-      extractKey="publicDraft";
     return pullArticleIds(userId)
       .then(ids=>{
         return Promise.all(pullPromises('/articles/',ids))
@@ -58,5 +52,26 @@ export const pullArticles = () => {
         dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:convertToObject(articles,"uid")}))
         return articles
       })
+  }
+}
+
+export const pullArticle = () => {
+  return (dispatch,getState) => {
+    dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING}));
+    const articleId = history.getCurrentLocation().query.aid;
+    const appState = getState().get("ui").get("appState");
+    var extractKey = "";
+    return database.ref('/shorten/'+articleId).once('value').then((snapshot)=>{
+      return database.ref('/articles/'+snapshot.val()).once('value')
+    }).then(snapshot=>{
+      var obj = {};
+      obj[snapshot.key] =  Map(Object.assign({uid:snapshot.key},snapshot.val()));
+      return {articles:Map(obj),key:snapshot.key}
+    })
+    .then(({articles,key})=>{
+      dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.SUCCESS,articles:articles}))
+      dispatch(setCurrent(key));
+      return articles
+    })
   }
 }
