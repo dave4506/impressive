@@ -4,7 +4,8 @@ import { onSuccess } from '../helper'
 import {
   NETWORK_STATUS,
   SET_CURRENT_ARTICLE,
-  SAVE_ARTICLE
+  SAVE_ARTICLE,
+  EDITOR_STATE_FILE_UPLOAD
 } from "../constants"
 
 const defaultState = Map({
@@ -22,6 +23,15 @@ export default function(state=defaultState,action) {
         return updateStatus.set('article',state.get("article").set("title",action.title))
       if(action.editorState)
         return updateStatus.set('article',state.get("article").set("editorState",action.editorState))
+    case EDITOR_STATE_FILE_UPLOAD:
+      var block = state.get("article").get("editorState")[action.index];
+      if(block.fileStatus == null) block.fileStatus = {};
+      block.fileStatus[action.fileHash] = action.status;
+      if(onSuccess(action))
+        block.props = Object.assign({},block.props,action.newBlockProps)
+      var newEditorState = state.get("article").get("editorState");
+      newEditorState[action.index] = block;
+      return state.set("article",state.get("article").set("editorState",newEditorState));
     default:
       return state;
   }

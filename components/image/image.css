@@ -31,6 +31,26 @@
   color:#e74c3c;
   text-transform: uppercase;
 }
+
 .image-error__init {
   display: none;
+}
+
+.image-upload {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload-overlay {
+  transition: all 500ms cubic-bezier(0.2, 1, 0.3, 1);
+  position: absolute;
+  overflow: hidden;
+  top:0;bottom:0;left:0;right:0;
+  background-color: rgba(0,0,0,0);
+  display: flex;justify-content: center;align-items: center;
+}
+
+.image-upload-image {
+  width: 100%;
+  object-fit:cover;
 }

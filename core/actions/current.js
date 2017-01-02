@@ -30,7 +30,9 @@ import {defaultBlockProps} from '../../pages/blocks'
 
 const database = firebase.database();
 
-const defaultEditorState = [{type:"PROFILE",props:defaultBlockProps("PROFILE")}]
+const defaultEditorState = () => {
+  return [{type:"PROFILE",props:defaultBlockProps("PROFILE"),hash:shortid.generate()}]
+}
 
 const updateLocalArticles = (dispatch,getState) => {
   return pullArticles()(dispatch,getState)
@@ -155,10 +157,11 @@ export const saveArticleState = (editorState) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.LOADING,editorState}));
     var updates = {};
-    const articleId = getState().get("current").get("article").get("uid")
-    updates[`articles/${articleId}/editorState`] = (editorState.length == 0 ? defaultEditorState:editorState);
+    const articleId = getState().get("current").get("article").get("uid");
+    const newEditorState = (editorState.length == 0 ? defaultEditorState():editorState);
+    updates[`articles/${articleId}/editorState`] = newEditorState;
     return database.ref().update(updates).then(()=>{
-      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,editorState}));
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,editorState:newEditorState}));
     }).catch((error)=>{
       dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })
@@ -173,7 +176,7 @@ export const createArticle = (title) => {
     const articleId = database.ref('/articles').push().key
     const shortId = shortid.generate()
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:defaultEditorState,public:false};
+    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:defaultEditorState(),public:false};
     updates[`shorten/${shortId}`] = articleId
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));

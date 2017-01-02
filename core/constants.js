@@ -75,6 +75,8 @@ export const DELETE_DRAFT = "DELETE_DRAFT";
 export const CREATE_ARTICLE = "CREATE_ARTICLE";
 export const DELETE_ARTICLE = "DELETE_ARTICLE";
 export const SAVE_ARTICLE = "SAVE_ARTICLE";
+export const EDITOR_STATE_FILE_UPLOAD = "EDITOR_STATE_FILE_UPLOAD";
+export const FILE_DELETE = "FILE_DELETE";
 
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
