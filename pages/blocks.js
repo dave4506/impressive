@@ -1,35 +1,35 @@
 import React, { PropTypes } from 'react';
 
-import ProfileEdit from '../../components/blocksEdit/profile'
-import QuoteEdit from '../../components/blocksEdit/quote'
-import GalleryEdit from '../../components/blocksEdit/gallery'
-import DescriptionEdit from '../../components/blocksEdit/description'
-import LinksEdit from '../../components/blocksEdit/links'
-import IconsEdit from '../../components/blocksEdit/icons'
-import CtaEdit from '../../components/blocksEdit/cta'
-import LineBreakEdit from '../../components/blocksEdit/lineBreak'
-import ChatEdit from '../../components/blocksEdit/chat'
-import IconRowEdit from '../../components/blocksEdit/iconRow'
-import ProjectEdit from '../../components/blocksEdit/project'
-import HeaderEdit from '../../components/blocksEdit/header'
-import TableEdit from '../../components/blocksEdit/table'
+import ProfileEdit from '../components/blocksEdit/profile'
+import QuoteEdit from '../components/blocksEdit/quote'
+import GalleryEdit from '../components/blocksEdit/gallery'
+import DescriptionEdit from '../components/blocksEdit/description'
+import LinksEdit from '../components/blocksEdit/links'
+import IconsEdit from '../components/blocksEdit/icons'
+import CtaEdit from '../components/blocksEdit/cta'
+import LineBreakEdit from '../components/blocksEdit/lineBreak'
+import ChatEdit from '../components/blocksEdit/chat'
+import IconRowEdit from '../components/blocksEdit/iconRow'
+import ProjectEdit from '../components/blocksEdit/project'
+import HeaderEdit from '../components/blocksEdit/header'
+import TableEdit from '../components/blocksEdit/table'
 
-import Profile from '../../components/blocks/profile'
-import Quote from '../../components/blocks/quote'
-import Gallery from '../../components/blocks/gallery'
-import Description from '../../components/blocks/description'
-import Links from '../../components/blocks/links'
-import Icons from '../../components/blocks/icons'
-import Cta from '../../components/blocks/cta'
-import LineBreak from '../../components/blocks/lineBreak'
-import Chat from '../../components/blocks/chat'
-import IconRow from '../../components/blocks/iconRow'
-import Project from '../../components/blocks/project'
-import Header from '../../components/blocks/header'
+import Profile from '../components/blocks/profile'
+import Quote from '../components/blocks/quote'
+import Gallery from '../components/blocks/gallery'
+import Description from '../components/blocks/description'
+import Links from '../components/blocks/links'
+import Icons from '../components/blocks/icons'
+import Cta from '../components/blocks/cta'
+import LineBreak from '../components/blocks/lineBreak'
+import Chat from '../components/blocks/chat'
+import IconRow from '../components/blocks/iconRow'
+import Project from '../components/blocks/project'
+import Header from '../components/blocks/header'
 
 import { BLOCKS } from '../core/constants'
 
-const Block = (type,edit,props) => {
+export const Block = ({type,edit,props}) => {
   if(edit)
     switch (type) {
       case BLOCKS.PROFILE:
@@ -96,4 +96,14 @@ const Block = (type,edit,props) => {
     }
 }
 
-export default Block
+export const defaultBlockProps = (type) => {
+  switch (type) {
+    case BLOCKS.PROFILE:
+      return {
+        profileSrc:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/default-profile-pic.png?alt=media&token=af347836-a662-41da-8f03-820b496503bf",
+        name:"",
+        description:""
+      }
+    default:
+  }
+}

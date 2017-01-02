@@ -83,7 +83,10 @@ function render(location) {
     if(renderable)
       return router.resolve(routes, location)
         .then(renderComponent)
-        .catch(error => router.resolve(routes, { ...location, error }).then(renderComponent));
+        .catch(error => {
+          console.log("ERROR:",error);
+          router.resolve(routes, { ...location, error }).then(renderComponent)
+        });
   })
 }
 

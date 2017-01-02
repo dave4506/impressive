@@ -11,6 +11,8 @@ import {pullArticle} from '../../core/actions/article'
 import {updateAppState} from '../../core/actions/ui'
 import {APP_STATE} from '../../core/constants'
 import history from '../../core/history'
+import { BLOCKS } from '../../core/constants'
+import {Block,defaultBlockProps} from '../blocks'
 
 const Article = ({article,onChange,onAddClick}) => {
   return (
@@ -21,9 +23,28 @@ const Article = ({article,onChange,onAddClick}) => {
         value={article.title}
         description="A title is the beginning of a sharing."
       />
-      <Add onClick={onAddClick}/>
+      <Add hidden={false} onClick={onAddClick(0)}/>
+      {article.editorState.map((b,i)=>{
+        return <BlockEditor onAddClick={onAddClick(i+1)} block={b}/>
+      })}
     </div>
   )
+}
+
+class BlockEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {mouseHover:true}
+  }
+  render() {
+    const {onAddClick,block} = this.props;
+    const {mouseHover} = this.state;
+    console.log(mouseHover);
+    return <div onMouseOver={()=>{this.setState({mouseHover:false})}} onMouseOut={()=>{this.setState({mouseHover:true})}}>
+      <Block type={block.type} edit={true} props={block.props}/>
+      <Add hidden={mouseHover} onClick={onAddClick}/>
+    </div>
+  }
 }
 
 const statusChange = (status) => {
@@ -53,6 +74,7 @@ class ResumeEdit extends React.Component {
   };
 
   componentWillMount() {
+    this.props.updateAppState();
     this.props.pullArticle();
   }
 
@@ -67,8 +89,12 @@ class ResumeEdit extends React.Component {
     }
   }
 
-  onAddClick(type) {
-
+  onAddClick(index) {
+    return (type) => {
+      const editorState = this.props.article.get("editorState")
+      editorState.splice(index,0,{type,props:defaultBlockProps(type)})
+      this.props.saveArticleState(editorState);
+    }
   }
 
   render() {
@@ -81,8 +107,9 @@ class ResumeEdit extends React.Component {
         </div>
         <Nav title="impresssive.co" linksL={["Sign out","Back","Inspiration"]} linksR={["Save","Delete","Make Public"]}/>
         {(()=>{
-          if(article.get("uid") != null)
-            return <Article article={article.toJS()} onChange={onChange} onAddClick={onAddClick}/>
+          if(article != null);
+            if(article.get("uid") != null)
+              return <Article article={article.toJS()} onChange={onChange} onAddClick={onAddClick}/>
         })()}
       </div>
     );
@@ -106,6 +133,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     saveArticleState: (state) => {
       dispatch(saveArticleState(state));
+    },
+    updateAppState: () => {
+      dispatch(updateAppState(APP_STATE.EDIT))
     }
   }
 }

@@ -1,6 +1,18 @@
 .block-add {
   position: relative;
   padding: 0 !important;
+  cursor: arrow;
+  transition: opacity 700ms cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.block-add__hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.block-add__reveal {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .block-tools {
@@ -29,6 +41,10 @@
 }
 
 .block-buttons {
+  background-color: white;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30%);
   transition: all 700ms cubic-bezier(0.2, 1, 0.3, 1);
 }
 
@@ -44,10 +60,12 @@
 
 .block-buttons__open {
   opacity: 1;
+  pointer-events: auto;
   transform: translateY(0%);
 }
 
 .block-buttons__close {
   opacity: 0;
+  pointer-events: none;
   transform: translateY(30%);
 }

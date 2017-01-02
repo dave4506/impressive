@@ -26,9 +26,11 @@ import {
   GROUP_KEYS
 } from "../constants";
 
+import {defaultBlockProps} from '../../pages/blocks'
+
 const database = firebase.database();
 
-const editorState = convertToRaw(createEditorState().getCurrentContent());
+const defaultEditorState = [{type:"PROFILE",props:defaultBlockProps("PROFILE")}]
 
 const updateLocalArticles = (dispatch,getState) => {
   return pullArticles()(dispatch,getState)
@@ -154,7 +156,7 @@ export const saveArticleState = (editorState) => {
     dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.LOADING,editorState}));
     var updates = {};
     const articleId = getState().get("current").get("article").get("uid")
-    updates[`articles/${articleId}/editorState`] = editorState
+    updates[`articles/${articleId}/editorState`] = (editorState.length == 0 ? defaultEditorState:editorState);
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,editorState}));
     }).catch((error)=>{
@@ -163,7 +165,7 @@ export const saveArticleState = (editorState) => {
   }
 }
 
-export const createArticle = () => {
+export const createArticle = (title) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.LOADING}));
     var updates = {};
@@ -171,13 +173,11 @@ export const createArticle = () => {
     const articleId = database.ref('/articles').push().key
     const shortId = shortid.generate()
     updates[`user_articles/${uid}/${articleId}`] = true;
-    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:[],public:false};
+    updates[`articles/${articleId}/`] = {author:uid,views:0,title,shortId,editorState:defaultEditorState,public:false};
     updates[`shorten/${shortId}`] = articleId
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.SUCCESS}));
-      dispatch(setCurrentId(articleId));
       history.push(`/edit?uid=${uid}&aid=${shortId}`)
-      dispatch(updateAppState("EDIT"));
     }).catch((error)=>{
       dispatch(simpleAction({type:CREATE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })
