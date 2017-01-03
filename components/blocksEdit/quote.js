@@ -10,11 +10,22 @@ class Quote extends React.Component {
   }
 
   render() {
-    const {quote,author} = this.props;
+    const {quote,author,onToolClick,onChange} = this.props;
 
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-quote"]}`} >
-      <h1 className={`${s["block-quote-text"]}`}>"{quote}"</h1>
-      <p className={`${b["block-caption"]}`}>-{author}</p>
+      <input
+        onChange={(e)=>{onChange({quote:e.target.value})}}
+        placeholder="Wise Words"
+        className={`${s["block-quote-text"]}`}
+        value={quote}
+        type="text" />
+      <input
+        onChange={(e)=>{onChange({author:e.target.value})}}
+        placeholder="wisesage"
+        className={`${b["block-caption"]}`}
+        value={author}
+        type="text" />
+      <Tools onClick={onToolClick}/>
     </div>
   }
 }

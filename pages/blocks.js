@@ -104,6 +104,32 @@ export const defaultBlockProps = (type) => {
         name:"",
         description:""
       }
+    case BLOCKS.GALLERY:
+      return {
+        images:[],
+        title:"",
+        description:""
+      }
+    case BLOCKS.HEADER:
+      return {
+        title:"",
+        subtext:""
+      }
+    case BLOCKS.LINE_BREAK:
+      return {
+      }
+    case BLOCKS.CTA:
+      return {
+        title:"",
+        subtext:"",
+        button:"",
+        link:""
+      }
+    case BLOCKS.QUOTE:
+      return {
+        quote:"",
+        author:""
+      }
     default:
   }
 }

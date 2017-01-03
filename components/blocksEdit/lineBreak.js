@@ -10,8 +10,10 @@ class LineBreak extends React.Component {
   }
 
   render() {
+    const { onToolClick } = this.props;
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-break"]}`} >
       <div className={`${s["block-break-line"]}`}></div>
+      <Tools onClick={onToolClick} />
     </div>
   }
 }

@@ -77,20 +77,20 @@ class Add extends React.Component {
               </ReactTooltip>
             </div>
           </div>
-          <div onClick={()=>{onClick("ICON_ROW")}} className={`${s["block-buttons-row"]}`}>
-            <div>
+          <div className={`${s["block-buttons-row"]}`}>
+            <div onClick={()=>{onClick("ICON_ROW")}}>
               <img data-tip data-for='iconsAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032"/>
               <ReactTooltip place="bottom" id='iconsAddButton' effect='solid'>
                 <span className={`${b["block-tooltip"]}`}>Icons Row</span>
               </ReactTooltip>
             </div>
-            <div>
+            <div onClick={()=>{onClick("LINE_BREAK")}}>
               <img data-tip data-for='lineBreakAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fcommon-04.svg?alt=media&token=b1a6bf92-0ff0-4c3d-b3d7-118b31184c95"/>
               <ReactTooltip place="bottom" id='lineBreakAddButton' effect='solid'>
                 <span className={`${b["block-tooltip"]}`}>Line Break</span>
               </ReactTooltip>
             </div>
-            <div>
+            <div onClick={()=>{onClick("HEADER")}}>
               <img data-tip data-for='headerAddButton' className={`${s["block-buttons-add"]}`} src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Ftext-04.svg?alt=media&token=d1083413-6720-4fe9-bb26-77eedcf2564b"/>
               <ReactTooltip place="bottom" id='headerAddButton' effect='solid'>
                 <span className={`${b["block-tooltip"]}`}>Header Text</span>

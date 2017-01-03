@@ -17,12 +17,15 @@ class Description extends React.Component {
   }
 
   render() {
-    const {texts,description,title} = this.props;
+    const {title,description,onToolClick,onChange} = this.props;
+    const {texts} = this.props;
     const columns = texts.map(descriptionText);
     return <Columns
       columns={columns}
       description={description}
       title={title}
+      onChange={onChange}
+      onToolClick={onToolClick}
     />
   }
 }

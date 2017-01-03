@@ -11,10 +11,21 @@ class Header extends React.Component {
   }
 
   render() {
-    const {title,subtext} = this.props;
+    const {title,subtext,onChange,onToolClick} = this.props;
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-header"]}`} >
-      <h1 className={`${s["block-header-title"]}`}>{title}</h1>
-      <p className={`${s["block-header-subtext"]}`}>{subtext}</p>
+      <input
+        onChange={(e)=>{onChange({title:e.target.value})}}
+        placeholder="Title goes here"
+        className={`${s["block-header-title"]}`}
+        value={title}
+        type="text" />
+      <input
+        onChange={(e)=>{onChange({subtext:e.target.value})}}
+        placeholder="Caption goes here"
+        className={`${s["block-header-subtext"]}`}
+        value={subtext}
+        type="text" />
+      <Tools onClick={onToolClick}/>
     </div>
   }
 }

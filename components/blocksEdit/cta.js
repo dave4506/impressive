@@ -11,11 +11,34 @@ class Cta extends React.Component {
   }
 
   render() {
-    const {button,buttonType,description,title} = this.props;
+    const {onChange,button,link,description,title,onToolClick} = this.props;
+    const buttonType = 'skeleton';
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-cta"]}`} >
-      <p className={`${b["block-title"]}`}>{title}</p>
-      <button className={`${s["block-cta-btn"]} ${s["block-cta-btn__"+buttonType]}`}>{button}</button>
-      <p className={`${b["block-caption"]}`}>{description}</p>
+      <input
+        onChange={(e)=>{onChange({title:e.target.value})}}
+        placeholder="Caption goes here"
+        className={`${b["block-title"]}`}
+        value={title}
+        type="text" />
+      <input
+        onChange={(e)=>{onChange({button:e.target.value})}}
+        placeholder="Call to Action Here"
+        className={`${s["block-cta-btn"]} ${s["block-cta-btn__"+buttonType]}`}
+        value={button}
+        type="text" />
+      <input
+        onChange={(e)=>{onChange({link:e.target.value})}}
+        placeholder="Link for call to action"
+        className={`${b["block-caption"]}`}
+        value={link}
+        type="text" />
+      <input
+        onChange={(e)=>{onChange({description:e.target.value})}}
+        placeholder="Caption goes here"
+        className={`${b["block-caption"]}`}
+        value={description}
+        type="text" />
+      <Tools onClick={onToolClick}/>
     </div>
   }
 }

@@ -1,6 +1,7 @@
 .block-header-title {
   font-size: 4rem;
   font-family: 'Merriweather',serif;
+  text-align: center;
   margin:0;
 }
 
@@ -9,4 +10,5 @@
   margin:0;
   font-weight: 400;
   letter-spacing: 0.1rem;
+  text-align: center;
 }

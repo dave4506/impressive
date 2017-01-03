@@ -10,7 +10,8 @@ class Cta extends React.Component {
   }
 
   render() {
-    const {button,buttonType,description,title} = this.props;
+    const {button,description,title} = this.props;
+    const buttonType = 'skeleton'
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-cta"]}`} >
       <p className={`${b["block-title"]}`}>{title}</p>
       <button className={`${s["block-cta-btn"]} ${s["block-cta-btn__"+buttonType]}`}>{button}</button>

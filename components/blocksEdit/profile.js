@@ -28,11 +28,7 @@ class Profile extends React.Component {
       <p className={`${b["block-caption"]}`}>Click to change pic.</p>
       <input onChange={(e)=>{onChange({name:e.target.value})}} className={`${s["block-profile-name"]}`} value={name} placeholder="A great person's name"/>
       <input onChange={(e)=>{onChange({description:e.target.value})}} className={`${s["block-profile-description"]}`} value={description} placeholder="What the person done."/>
-      <Tools tools={[{
-        title:"DELETE",
-        publicTitle:"Delete above block",
-        src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fui-15.svg?alt=media&token=d59e8719-fe0e-4333-bf3b-5dfaab428eee"
-      }]} onClick={onToolClick}/>
+      <Tools onClick={onToolClick}/>
     </div>
   }
 }

@@ -49,7 +49,7 @@ export const uploadEditorState = (fileData,hash,key,structure) => {
         if(structure == 'single')
           obj[key] = snapshot.downloadURL
         if(structure == 'array')
-          obj[key] = (block.props[key] || []).push(snapshot.downloadURL)
+          obj[key] = (block.props[key] || []).concat([snapshot.downloadURL])
         dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.SUCCESS,fileHash,index:blockIndex,newBlockProps:obj}));
         dispatch(saveArticleState(getState().get("current").get("article").get("editorState")))
       }).catch((error)=>{
