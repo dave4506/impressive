@@ -130,6 +130,12 @@ export const defaultBlockProps = (type) => {
         quote:"",
         author:""
       }
+    case BLOCKS.CHAT:
+      return {
+        chat:[],
+        title:"",
+        description:""
+      }
     default:
   }
 }

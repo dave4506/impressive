@@ -70,8 +70,10 @@ export const currentUserStatus = () => {
         rej(err);
       }
       if (user) {
+        unListen();
         res(user.uid);
       } else {
+        unListen();
         res();
       }
     });

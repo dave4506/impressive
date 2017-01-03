@@ -21,7 +21,7 @@ class Gallery extends React.Component {
     return <div className={`${b["block"]} ${b["block__full-width"]} ${s["block-gallery"]}`} >
       <input
         onChange={(e)=>{onChange({title:e.target.value})}}
-        placeholder="Caption goes here"
+        placeholder="Title goes here"
         className={`${b["block-title"]}`}
         value={title}
         type="text" />
