@@ -6,6 +6,7 @@ import profile from './profile'
 import current from './current'
 import draft from './draft'
 import article from './article'
+import file from './file'
 
 const reducer = combineReducers({
   ui,
@@ -13,7 +14,8 @@ const reducer = combineReducers({
   profile,
   current,
   draft,
-  article
+  article,
+  file
 })
 
 export default reducer

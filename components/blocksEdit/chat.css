@@ -34,12 +34,23 @@
 }
 
 .chat-input {
+  position: relative;
+  background-color: #F9F9F9;
   font-size: 1.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 30%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.2rem;
   transition: opacity 500ms cubic-bezier(0.2,1,0.3,1);
+}
+
+.chat-input svg {
+  position: absolute;
+  top:0;bottom:0;right:1rem;
+  margin: auto;
 }
 
 .chat-input input {

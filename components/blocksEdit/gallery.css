@@ -4,15 +4,16 @@
 }
 
 .block-gallery-imgs-img {
-  height: 30rem;
-  width: auto;
+  width: 40rem;
   padding: 0;
   margin: 0;
   position: relative;
 }
 
 .block-gallery-imgs-img img {
+  width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .block-gallery-imgs-close {
@@ -54,4 +55,8 @@
 .file-input-tool__open {
   transition: transform 500ms cubic-bezier(0.2,1,0.3,1);
   transform: rotate(0deg);
+}
+
+.block-masonry {
+  margin: 0 auto;
 }

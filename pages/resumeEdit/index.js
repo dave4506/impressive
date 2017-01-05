@@ -15,7 +15,7 @@ import {APP_STATE,BLOCKS} from '../../core/constants'
 import {Block,defaultBlockProps} from '../blocks'
 import history from '../../core/history'
 
-const Article = ({article,onChange,onAddClick,onToolClick,onUploadEditorState}) => {
+const Article = ({file,article,onChange,onAddClick,onToolClick,onUploadEditorState}) => {
   return (
     <div>
       <Input
@@ -25,13 +25,14 @@ const Article = ({article,onChange,onAddClick,onToolClick,onUploadEditorState}) 
         description="A title is the beginning of a sharing."
       />
       {article.editorState.map((b,i)=>{
+
         return <BlockEditor
           key={i}
           onUploadEditorState={onUploadEditorState(b.hash)}
           onToolClick={onToolClick(i)}
           onChange={onChange(i)}
           onAddClick={onAddClick(i)}
-          block={b}/>
+          block={Object.assign({},b,{fileStatus:file[i]})}/>
       })}
       <Add hidden={false} onClick={onAddClick(article.editorState.length)}/>
     </div>
@@ -147,7 +148,7 @@ class ResumeEdit extends React.Component {
 
   render() {
     const {state,props,onChange,onAddClick,onToolClick,onUploadEditorState} = this;
-    const {article,status} = props;
+    const {article,status,file} = props;
     return (
       <div>
         <div className={`${s["edit-status"]} ${s["edit-status__"+status]}`}>
@@ -160,6 +161,7 @@ class ResumeEdit extends React.Component {
               return <Article
                 onToolClick={onToolClick}
                 article={article.toJS()}
+                file={file.toJS()}
                 onChange={onChange}
                 onAddClick={onAddClick}
                 onUploadEditorState={onUploadEditorState}/>
@@ -172,7 +174,8 @@ class ResumeEdit extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     article:state.get("current").get("article"),
-    status:state.get("current").get("status")
+    status:state.get("current").get("status"),
+    file:state.get("file").get("fileStatus")
   }
 }
 

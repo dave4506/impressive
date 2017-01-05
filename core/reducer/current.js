@@ -25,8 +25,6 @@ export default function(state=defaultState,action) {
         return updateStatus.set('article',state.get("article").set("editorState",action.editorState))
     case EDITOR_STATE_FILE_UPLOAD:
       var block = state.get("article").get("editorState")[action.index];
-      if(block.fileStatus == null) block.fileStatus = {};
-      block.fileStatus[action.fileHash] = action.status;
       if(onSuccess(action))
         block.props = Object.assign({},block.props,action.newBlockProps)
       var newEditorState = state.get("article").get("editorState");

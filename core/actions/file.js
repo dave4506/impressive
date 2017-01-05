@@ -4,7 +4,8 @@ import {
   NETWORK_STATUS,
   PROFILE_PIC_UPLOAD,
   EDITOR_STATE_FILE_UPLOAD,
-  FILE_DELETE
+  FILE_DELETE,
+  EDITOR_STATE_FILE_PREVIEW
 } from "../constants";
 
 import history from '../history'
@@ -30,6 +31,16 @@ export const uploadProfilePic = (file) => {
   }
 }
 
+const createLocalFileUrl = (file) => {
+  return new Promise((res,rej)=>{
+    const reader  = new FileReader();
+    reader.onloadend = function () {
+      res(reader.result);
+    }
+    reader.readAsDataURL(file);
+  })
+}
+
 export const uploadEditorState = (fileData,hash,key,structure) => {
   return (dispatch,getState) => {
     const uid = history.getCurrentLocation().query.uid;
@@ -43,8 +54,16 @@ export const uploadEditorState = (fileData,hash,key,structure) => {
         if(block.props[key] != null)
           if(block.props[key].indexOf('default') == -1)
             ref = storage.refFromURL(block.props[key]);
-      dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,fileHash,index:blockIndex}));
-      return ref.put(file).then(function(snapshot) {
+      dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,loading:0,fileHash,index:blockIndex}));
+      const uploadTask = ref.put(file);
+      uploadTask.on('state_changed', function(snapshot){
+        const loading = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,loading,fileHash,index:blockIndex}));
+      });
+      return createLocalFileUrl(file).then((src)=>{
+        dispatch(simpleAction({type:EDITOR_STATE_FILE_PREVIEW,src,blockIndex,fileHash}));
+        return uploadTask
+      }).then(function(snapshot) {
         var obj = {}
         if(structure == 'single')
           obj[key] = snapshot.downloadURL
