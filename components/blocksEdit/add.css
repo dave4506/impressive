@@ -22,7 +22,7 @@
 }
 
 .block-add-button {
-  padding: 0 1rem;
+  margin: 0 1rem;
   transition: all 500ms cubic-bezier(0.2, 1, 0.3, 1);
 }
 
@@ -51,7 +51,7 @@
 .block-buttons-add {
   width: 22px;
   height: 22px;
-  padding: 1rem 0.5rem;
+  margin: 1rem 0.5rem;
 }
 
 .block-buttons-row {

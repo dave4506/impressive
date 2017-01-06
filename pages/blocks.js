@@ -100,7 +100,7 @@ export const defaultBlockProps = (type) => {
   switch (type) {
     case BLOCKS.PROFILE:
       return {
-        profileSrc:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/default-profile-pic.png?alt=media&token=af347836-a662-41da-8f03-820b496503bf",
+        profile_image:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/default-profile-pic.png?alt=media&token=af347836-a662-41da-8f03-820b496503bf",
         name:"",
         description:""
       }

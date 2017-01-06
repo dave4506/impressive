@@ -115,21 +115,15 @@ class ResumeEdit extends React.Component {
   }
 
   sanitize(block) {
-    Object.keys(block.props).map((keys)=>{
-      const prop = block.props[keys];
-      console.log(typeof prop);
-      if(typeof prop === "string")
-        if(prop.indexOf('firebasestorage') != -1 && prop.indexOf('impresssive-86554') != -1)
-          this.props.deleteFile(prop)
-      if(typeof prop === "object") {
-        console.log(prop[Object.keys(prop)[0]]);
-        if(Object.keys(prop).length != 0)
-          if(prop[Object.keys(prop)[0]].indexOf('firebasestorage') != -1 && prop[Object.keys(prop)[0]].indexOf('impresssive-86554') != -1)
-            prop.map((p)=>{
-              console.log(p);
-              this.props.deleteFile(p)
-            })
-      }
+    Object.keys(block.props).map((key)=>{
+      const prop = block.props[key];
+      if(key.indexOf('images') != -1)
+        prop.map((p)=>{
+          console.log(p);
+          this.props.deleteFile(p)
+        })
+      else if(key.indexOf('image') != -1)
+        this.props.deleteFile(prop)
     })
   }
 

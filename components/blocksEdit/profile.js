@@ -23,10 +23,10 @@ class Profile extends React.Component {
 
   render() {
     const {profileHash} = this.state;
-    const {fileStatus,profileSrc,name,description,onToolClick,onChange} = this.props;
+    const {fileStatus,profile_image,name,description,onToolClick,onChange} = this.props;
     const profileStatus = fileStatus[profileHash] || {};
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-profile"]}`} >
-      <ImageUpload status={profileStatus.status} classStyles={s["block-profile-img"]} src={profileSrc} onUpload={this.onUpload.bind(this)} />
+      <ImageUpload status={profileStatus.status} classStyles={s["block-profile-img"]} src={profile_image} onUpload={this.onUpload.bind(this)} />
       <p className={`${b["block-caption"]}`}>Click on profile to change pic.</p>
       <input onChange={(e)=>{onChange({name:e.target.value})}} className={`${s["block-profile-name"]}`} value={name} placeholder="A great person's name"/>
       <input onChange={(e)=>{onChange({description:e.target.value})}} className={`${s["block-profile-description"]}`} value={description} placeholder="What the person done."/>
