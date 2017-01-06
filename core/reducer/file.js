@@ -12,18 +12,15 @@ const defaultState = Map({
 })
 
 export default function(state=defaultState,action) {
-  const {blockIndex,fileHash} = action;
   switch (action.type) {
     case EDITOR_STATE_FILE_UPLOAD:
-      const {loading,status} = action;
-      var fileStatus = state.get("fileStatus").get(blockIndex) || {};
-      fileStatus[fileHash] = Object.assign({},fileStatus[fileHash],{blockIndex,status,loading})
-      return state.set("fileStatus",state.get("fileStatus").set(blockIndex,fileStatus));
+      var fileStatus = state.get("fileStatus").get(action.index) || {};
+      fileStatus[action.fileHash] = Object.assign({},fileStatus[action.fileHash],{status:action.status,loading:action.loading})
+      return state.set("fileStatus",state.get("fileStatus").set(action.index,fileStatus));
     case EDITOR_STATE_FILE_PREVIEW:
-      const {src} = action;
-      var fileStatus = state.get("fileStatus").get(blockIndex) || {};
-      fileStatus[fileHash] = Object.assign({},fileStatus[fileHash],{src})
-      return state.set("fileStatus",state.get("fileStatus").set(blockIndex,fileStatus));
+      var fileStatusSrc = state.get("fileStatus").get(action.index) || {};
+      fileStatusSrc[action.fileHash] = Object.assign({},fileStatusSrc[action.fileHash],{src:action.src})
+      return state.set("fileStatus",state.get("fileStatus").set(action.index,fileStatusSrc));
     default:
       return state;
   }

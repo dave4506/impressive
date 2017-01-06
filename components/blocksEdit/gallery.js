@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
+import {connect} from 'react-redux'
+
 import Slider from 'react-slick';
 import b from './block.css';
 import s from './gallery.css';
 import Tools from '../tools';
 import shortid from 'shortid'
-
+import {deleteFile} from '../../core/actions/file';
 var Masonry = require('react-masonry-component');
 
 class Gallery extends React.Component {
@@ -28,13 +30,14 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const {fileStatus,images,title,description,onToolClick,onChange} = this.props;
+    const {deleteFile,fileStatus,images,title,description,onToolClick,onChange} = this.props;
     const {} = this.state;
     const masonryOptions = {
-      isFitWidth: true
+      columnWidth: '.grid-sizer',
+      itemSelector: '.grid-item',
+      percentPosition: true
     }
-
-    return <div className={`${b["block"]} ${b["block__full-width"]} ${s["block-gallery"]}`} >
+    return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-gallery"]}`} >
       <input
         onChange={(e)=>{onChange({title:e.target.value})}}
         placeholder="Title goes here"
@@ -46,20 +49,32 @@ class Gallery extends React.Component {
               className={`${s["block-masonry"]}`}
               elementType={'div'}
               options={masonryOptions}
-              disableImagesLoaded={true}
+              disableImagesLoaded={false}
               updateOnEachImageLoad={true}
           >
+            <div style={{width:"50%"}} className="grid-sizer"></div>
             {images.map((image,index)=>{
               return (
-                <div className={`${s["block-gallery-imgs-img"]}`} key={index}>
-                  <svg onClick={()=>{
-                    const newImages = [].concat(images);
-                    newImages.splice(index,1);
-                    onChange({images:newImages})
-                  }} className={`${s["block-gallery-imgs-close"]}`} width="26" height="26" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 21.172l-4.956-4.956c-.779-.779-2.041-.775-2.822.006-.786.786-.784 2.045-.006 2.822l4.956 4.956-4.956 4.956c-.778.778-.78 2.036.006 2.822.781.781 2.043.785 2.822.006l4.956-4.956 4.956 4.956c.779.779 2.041.775 2.822-.006.786-.786.784-2.045.006-2.822l-4.956-4.956 4.956-4.956c.778-.778.78-2.036-.006-2.822-.781-.781-2.043-.785-2.822-.006l-4.956 4.956zm0 22.828c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20zm0-4c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16z" fill="#FFF"/></svg>
+                <div className={`grid-item ${s["block-gallery-imgs-img"]}`} key={index}>
+                  <div className={`${s["img-overlay"]}`}>
+                    <svg onClick={()=>{
+                      const newImages = [].concat(images);
+                      deleteFile(newImages[index]);
+                      newImages.splice(index,1);
+                      onChange({images:newImages});
+                    }} className={`${s["block-gallery-imgs-close"]}`} width="26" height="26" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 21.172l-4.956-4.956c-.779-.779-2.041-.775-2.822.006-.786.786-.784 2.045-.006 2.822l4.956 4.956-4.956 4.956c-.778.778-.78 2.036.006 2.822.781.781 2.043.785 2.822.006l4.956-4.956 4.956 4.956c.779.779 2.041.775 2.822-.006.786-.786.784-2.045.006-2.822l-4.956-4.956 4.956-4.956c.778-.778.78-2.036-.006-2.822-.781-.781-2.043-.785-2.822-.006l-4.956 4.956zm0 22.828c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20zm0-4c-8.837 0-16-7.163-16-16s7.163-16 16-16 16 7.163 16 16-7.163 16-16 16z" fill="#FFF"/></svg>
+                  </div>
                   <img src={image}/>
                 </div>
               )
+            })}
+            {Object.keys(fileStatus).map((key,index)=>{
+              const status = fileStatus[key];
+              console.log(status);
+              if(status.status != "SUCCESS" && status.src != null)
+                return <div className={`grid-item ${s["block-gallery-imgs-img"]} ${s["block-gallery-imgs-img__preview"]}`} key={index}>
+                  <img src={status.src}/>
+                </div>
             })}
           </Masonry>
       </div>
@@ -82,9 +97,28 @@ class Gallery extends React.Component {
   }
 }
 
+
 Gallery.defaultProps = {
-  fileStatus: [],
+  fileStatus: {},
   images:[]
 };
 
-export default Gallery
+const mapStateToProps = (state, ownProps) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    deleteFile: (url) => {
+      dispatch(deleteFile(url))
+    }
+  }
+}
+
+const GalleryRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Gallery)
+
+export default GalleryRedux

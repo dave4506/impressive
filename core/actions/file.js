@@ -15,7 +15,6 @@ const storage = firebase.storage();
 
 export const upload = (ref,file,type) => {
   return (dispatch,getState) => {
-    console.log(type)
     dispatch(simpleAction({type,status:NETWORK_STATUS.LOADING}));
     return ref.put(file).then(function(snapshot) {
       dispatch(simpleAction({type,status:NETWORK_STATUS.SUCCESS,url:snapshot.downloadURL}));
@@ -54,14 +53,14 @@ export const uploadEditorState = (fileData,hash,key,structure) => {
         if(block.props[key] != null)
           if(block.props[key].indexOf('default') == -1)
             ref = storage.refFromURL(block.props[key]);
-      dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,loading:0,fileHash,index:blockIndex}));
+      dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,loading:0,fileHash,index:blockIndex,init:"init"}));
       const uploadTask = ref.put(file);
       uploadTask.on('state_changed', function(snapshot){
         const loading = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.LOADING,loading,fileHash,index:blockIndex}));
       });
       return createLocalFileUrl(file).then((src)=>{
-        dispatch(simpleAction({type:EDITOR_STATE_FILE_PREVIEW,src,blockIndex,fileHash}));
+        dispatch(simpleAction({type:EDITOR_STATE_FILE_PREVIEW,src,index:blockIndex,fileHash}));
         return uploadTask
       }).then(function(snapshot) {
         var obj = {}
