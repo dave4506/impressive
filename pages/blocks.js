@@ -136,6 +136,12 @@ export const defaultBlockProps = (type) => {
         title:"",
         description:""
       }
+    case BLOCKS.ICON_ROW:
+      return {
+        icons:[],
+        title:"",
+        description:""
+      }
     default:
   }
 }

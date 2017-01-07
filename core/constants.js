@@ -82,3 +82,6 @@ export const FILE_DELETE = "FILE_DELETE";
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
 export const USER_STATUS_CHANGE = "USER_STATUS_CHANGE";
+
+export const ICON_CAT_LOAD = "ICON_CAT_LOAD";
+export const ICON_LOAD = "ICON_LOAD";

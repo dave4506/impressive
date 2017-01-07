@@ -7,6 +7,7 @@ import current from './current'
 import draft from './draft'
 import article from './article'
 import file from './file'
+import icon from './icon'
 
 const reducer = combineReducers({
   ui,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   current,
   draft,
   article,
-  file
+  file,
+  icon
 })
 
 export default reducer

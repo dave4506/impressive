@@ -148,7 +148,7 @@ class ResumeEdit extends React.Component {
     const {state,props,onChange,onAddClick,onToolClick,onUploadEditorState} = this;
     const {article,status,file} = props;
     return (
-      <div>
+      <div className={`${s["editor"]}`}>
         <div className={`${s["edit-status"]} ${s["edit-status__"+status]}`}>
           <p>{statusChange(status)}</p>
         </div>

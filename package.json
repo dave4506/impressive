@@ -19,6 +19,7 @@
     "react-dom": "^15.2.1",
     "react-masonry-component": "^5.0.1",
     "react-mdl": "^1.6.1",
+    "react-overlays": "^0.6.10",
     "react-redux": "^4.4.5",
     "react-tooltip": "^3.2.2",
     "redux": "^3.5.2",
