@@ -155,6 +155,12 @@ export const defaultBlockProps = (type) => {
         title:"",
         description:""
       }
+    case BLOCKS.LINKS:
+      return {
+        links:[],
+        title:"",
+        description:""
+      }
     default:
   }
 }

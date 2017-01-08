@@ -7,6 +7,8 @@
 .block-link-text-group {
   text-align: left;
   padding-left: 1rem;
+  width: 100%;
+  resize: vertical;
 }
 
 .block-link-title {
@@ -15,6 +17,7 @@
   margin:0;
   font-size: 1.2rem;
   padding: 0.2rem;
+  width: 100%;
 }
 
 .block-link-text {
@@ -28,4 +31,47 @@
 
 .block-link-number {
   font-family: 'Merriweather', serif;
+}
+
+.block-link {
+  position: relative;
+}
+
+.block-link-column-close img {
+  height: 22px;
+  opacity: 0.5;
+  transition: opacity 500ms cubic-bezier(0.2,1,0.3,1);
+}
+
+.block-link-column-close img:hover {
+  opacity: 1;
+}
+
+.block-link-text {
+  border: none;
+  min-height: 8rem;
+}
+
+.block-link-text:focus {
+  outline: none;
+}
+
+.block-link-column-close {
+  position: absolute;
+  bottom:0;right:0;top:0;
+  margin: auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.block-link-column-add img {
+  height: 22px;
+  opacity: 0.5;
+  transition: opacity 500ms cubic-bezier(0.2,1,0.3,1);
+}
+
+.block-link-column-add img:hover {
+  opacity: 1;
 }
