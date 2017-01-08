@@ -1,22 +1,25 @@
 import React, { PropTypes } from 'react';
 import s from './tools.css';
 import ReactTooltip from 'react-tooltip'
+import shortid from 'shortid';
 
 class Tools extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addButton:false
+      addButton:false,
+      id:shortid.generate()
     };
   }
+
   render() {
-    const {addButton} = this.state;
+    const {addButton,id} = this.state;
     const {onClick,tools} = this.props;
     return <div className={`${s["toolbar"]}`}>
       {tools.map((t,i)=>{
         return <div key={i} onClick={()=>{onClick(t.title)}}>
-          <img data-tip data-for={`${t.title}ToolButton`} className={`${s["toolbar-icon"]} ${t.customClass || ''}`} src={t.src}/>
-          <ReactTooltip place="bottom" id={`${t.title}ToolButton`} effect='solid'>
+          <img data-tip data-for={`${t.title}-${id}-ToolButton`} className={`${s["toolbar-icon"]} ${t.customClass || ''}`} src={t.src}/>
+          <ReactTooltip place="bottom" id={`${t.title}-${id}-ToolButton`} effect='solid'>
             <span className={`${s["block-tooltip"]}`}>{t.publicTitle}</span>
           </ReactTooltip>
         </div>
