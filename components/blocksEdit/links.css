@@ -47,6 +47,16 @@
   opacity: 1;
 }
 
+.block-link-column-close {
+  position: absolute;
+  bottom:0;right:0;top:0;
+  margin: auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .block-link-text {
   border: none;
   min-height: 8rem;
