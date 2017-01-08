@@ -4,12 +4,26 @@ import s from './iconRow.css';
 import Tools from '../tools';
 import IconSelector from '../tools/icon';
 
+const LinkInput = ({link,onChange,onDelete}) => {
+  return (<div className={`${s["icon-link"]}`}>
+    <button onClick={onDelete} className={`${s["icon-link-delete"]}`}>Delete</button>
+    <input
+    onChange={(e)=>{onChange(e.target.value)}}
+    placeholder="Link redirect on click"
+    className={`${s["icon-link-input"]}`}
+    value={link}
+    type="text" />
+  </div>)
+}
+
 class IconRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
     this.addIcon = this.addIcon.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.onLink = this.onLink.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   addIcon() {
@@ -17,12 +31,29 @@ class IconRow extends React.Component {
     onChange({icons:icons.concat([{src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032",link:""}])})
   }
 
+  onDelete(index) {
+    return () => {
+      const {icons,onChange} = this.props;
+      const newIcons = [].concat(icons);
+      newIcons.splice(index,1);
+      onChange({icons:newIcons})
+    }
+  }
+
   onSelect(index) {
     return (src) => {
       const {icons,onChange} = this.props;
       const newIcons = [].concat(icons);
       newIcons.splice(index,1,Object.assign({},newIcons[index],{src}));
-      console.log(newIcons)
+      onChange({icons:newIcons})
+    }
+  }
+
+  onLink(index) {
+    return (link) => {
+      const {icons,onChange} = this.props;
+      const newIcons = [].concat(icons);
+      newIcons.splice(index,1,Object.assign({},newIcons[index],{link}));
       onChange({icons:newIcons})
     }
   }
@@ -38,7 +69,11 @@ class IconRow extends React.Component {
         type="text" />
       <div className={`${s["block-icon-row-gallery"]}`}>
         {icons.map((icon,i)=>{
-          return <IconSelector current={icon.src} onSelect={this.onSelect(i)} key={i}>
+          return <IconSelector
+            extra={<LinkInput onDelete={this.onDelete(i)} onChange={this.onLink(i)} link={icon.link}/>}
+            current={icon.src}
+            onSelect={this.onSelect(i)}
+            key={i}>
             <img className={`${s["block-icon"]}`} src={icon.src} key={i}/>
           </IconSelector>
         })}

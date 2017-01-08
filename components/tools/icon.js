@@ -19,8 +19,11 @@ class IconSelector extends React.Component {
 
   render() {
     const {status,selected,key} = this.state;
-    const {cat,icons,current,iconLoad,onSelect,onHide} = this.props;
+    const {cat,icons,current,iconLoad,onSelect,onHide,extra} = this.props;
     return <div className={`${s["icon-selector"]}`}>
+      <div className={`${s["icon-extra"]}`}>
+        {extra}
+      </div>
       <div className={`${s["icon-selected"]}`}>
         <p className={`${s["icon-title"]}`}>Current:</p>
         <div className={`${s["icon"]}`}>
@@ -94,7 +97,7 @@ class IconOverlay extends React.Component {
   render() {
     const {onToggle} = this;
     const {overlay} = this.state;
-    const {children,icon,iconLoad,onSelect,current} = this.props;
+    const {children,icon,iconLoad,onSelect,current,extra} = this.props;
     return <div className={`${s["icon-overlay"]}`}>
       <div onClick={onToggle}>
         {children}
@@ -105,7 +108,7 @@ class IconOverlay extends React.Component {
         container={this}
         target={ props => findDOMNode(this.refs.target)}
       >
-        <IconSelector current={current} onSelect={onSelect} iconLoad={iconLoad} cat={icon.cat} icons={icon.icons} onHide={() => this.setState({ overlay: false })}/>
+        <IconSelector extra={extra} current={current} onSelect={onSelect} iconLoad={iconLoad} cat={icon.cat} icons={icon.icons} onHide={() => this.setState({ overlay: false })}/>
       </Overlay>
     </div>
   }
