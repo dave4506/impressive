@@ -139,8 +139,8 @@ class ResumeEdit extends React.Component {
   }
 
   onUploadEditorState(hash) {
-    return (file,key,structure) => {
-      this.props.uploadEditorState(file,hash,key,structure)
+    return (file,key,structure,custom) => {
+      this.props.uploadEditorState(file,hash,key,structure,custom)
     }
   }
 
@@ -191,8 +191,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateAppState: () => {
       dispatch(updateAppState(APP_STATE.EDIT))
     },
-    uploadEditorState: (file,hash,key,structure) => {
-      dispatch(uploadEditorState(file,hash,key,structure))
+    uploadEditorState: (file,hash,key,structure,custom) => {
+      dispatch(uploadEditorState(file,hash,key,structure,custom))
     },
     deleteFile: (url) => {
       dispatch(deleteFile(url));

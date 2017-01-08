@@ -16,7 +16,7 @@ class Cta extends React.Component {
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-cta"]}`} >
       <input
         onChange={(e)=>{onChange({title:e.target.value})}}
-        placeholder="Caption goes here"
+        placeholder="Title goes here"
         className={`${b["block-title"]}`}
         value={title}
         type="text" />

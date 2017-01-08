@@ -142,6 +142,13 @@ export const defaultBlockProps = (type) => {
         title:"",
         description:""
       }
+    case BLOCKS.PROJECT:
+      return {
+        projects:[],
+        projectsSrc:[],
+        title:"",
+        description:""
+      }
     default:
   }
 }

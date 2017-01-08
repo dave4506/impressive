@@ -40,7 +40,7 @@ const createLocalFileUrl = (file) => {
   })
 }
 
-export const uploadEditorState = (fileData,hash,key,structure) => {
+export const uploadEditorState = (fileData,hash,key,structure,custom) => {
   return (dispatch,getState) => {
     const uid = history.getCurrentLocation().query.uid;
     const editorState = getState().get("current").get("article").get("editorState");
@@ -68,6 +68,8 @@ export const uploadEditorState = (fileData,hash,key,structure) => {
           obj[key] = snapshot.downloadURL
         if(structure == 'array')
           obj[key] = (block.props[key] || []).concat([snapshot.downloadURL])
+        if(structure == 'custom')
+          obj[key] = custom((block.props[key] || []),snapshot.downloadURL)
         dispatch(simpleAction({type:EDITOR_STATE_FILE_UPLOAD,status:NETWORK_STATUS.SUCCESS,fileHash,index:blockIndex,newBlockProps:obj}));
         dispatch(saveArticleState(getState().get("current").get("article").get("editorState")))
       }).catch((error)=>{
