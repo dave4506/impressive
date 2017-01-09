@@ -144,9 +144,22 @@ export const saveArticleTitle = (title) => {
     var updates = {};
     const articleId = getState().get("current").get("article").get("uid")
     updates[`articles/${articleId}/title`] = title
-    console.log(articleId,title)
     return database.ref().update(updates).then(()=>{
       dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,title}));
+    }).catch((error)=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
+    })
+  }
+}
+
+export const saveArticlePublic = (status) => {
+  return (dispatch,getState) => {
+    dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.LOADING,public:status}));
+    var updates = {};
+    const articleId = getState().get("current").get("article").get("uid")
+    updates[`articles/${articleId}/public`] = status
+    return database.ref().update(updates).then(()=>{
+      dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.SUCCESS,public:status}));
     }).catch((error)=>{
       dispatch(simpleAction({type:SAVE_ARTICLE,status:NETWORK_STATUS.ERROR,error}))
     })

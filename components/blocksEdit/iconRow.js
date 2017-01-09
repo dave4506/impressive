@@ -69,13 +69,15 @@ class IconRow extends React.Component {
         type="text" />
       <div className={`${s["block-icon-row-gallery"]}`}>
         {icons.map((icon,i)=>{
-          return <IconSelector
-            extra={<LinkInput onDelete={this.onDelete(i)} onChange={this.onLink(i)} link={icon.link}/>}
-            current={icon.src}
-            onSelect={this.onSelect(i)}
-            key={i}>
-            <img className={`${s["block-icon"]}`} src={icon.src} key={i}/>
-          </IconSelector>
+          return <div key={i} style={{position:"relative"}}>
+            <IconSelector
+              extra={<LinkInput onDelete={this.onDelete(i)} onChange={this.onLink(i)} link={icon.link}/>}
+              current={icon.src}
+              onSelect={this.onSelect(i)}
+              >
+              <img className={`${s["block-icon"]}`} src={icon.src} key={i}/>
+            </IconSelector>
+          </div>
         })}
       </div>
       <p className={`${b["block-caption"]}`}>Click on icon to change it.</p>

@@ -6,9 +6,11 @@ import Nav from '../../components/nav/landingNav'
 import Modal from '../../components/modal/index'
 import Header from '../../components/blocks/header'
 import Table from '../../components/blocksEdit/table'
+import Footer from '../../components/footer'
 
 import {createArticle,deleteArticle} from '../../core/actions/current'
 import {updateAppState} from '../../core/actions/ui'
+import {logOut} from '../../core/actions/user'
 import {APP_STATE} from '../../core/constants'
 import {pullArticles} from '../../core/actions/article'
 import history from '../../core/history'
@@ -44,11 +46,14 @@ class Dashboard extends React.Component {
   }
 
   navOnClick(from,link,status) {
+    console.log(from,link,status)
     if(from == "right")
       switch (link) {
+        case 0: this.props.logOut();
       }
     if(from == "left")
       switch (link) {
+        case 0: history.push('enjoy/?aid=Hk7Vf_e8x');
       }
   }
 
@@ -105,6 +110,7 @@ class Dashboard extends React.Component {
           table={table}
           description="It only takes some passion to be passionate."
         />
+        <Footer/>
       </div>
     );
   }
@@ -129,6 +135,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     deleteArticle: (article) => {
       dispatch(deleteArticle(article))
+    },
+    logOut: () => {
+      dispatch(logOut())
     }
   }
 }

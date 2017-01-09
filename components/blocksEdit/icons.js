@@ -5,7 +5,7 @@ import Columns from './columns'
 import Tools from '../tools';
 import IconSelector from '../tools/icon';
 
-const iconComp = ({src,title,text,link},onDelete,onChange,i) => {
+const iconComp = ({src,linkSrc,title,text,link},onDelete,onChange,i) => {
   return <div className={`${s["block-icon"]}`}>
     <IconSelector
       current={src}
@@ -18,6 +18,13 @@ const iconComp = ({src,title,text,link},onDelete,onChange,i) => {
         placeholder="Title goes here"
         className={`${s["block-icon-title"]}`}
         value={title}
+        type="text"/>
+      <input
+        onChange={(e)=>{onChange({linkSrc:e.target.value})}}
+        placeholder="Link goes here"
+        style={{textAlign:"left",width:"100%"}}
+        className={`${b["block-caption"]}`}
+        value={linkSrc}
         type="text"/>
       <textarea
         onChange={(e)=>{onChange({text:e.target.value})}}
@@ -41,13 +48,13 @@ class Icons extends React.Component {
 
   onColumnAdd() {
     const {icons,onChange} = this.props;
-    onChange({icons:icons.concat([[{src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032",title:"",text:""}]])});
+    onChange({icons:icons.concat([[{linkSrc:"",src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032",title:"",text:""}]])});
   }
 
   onIconAdd(index) {
     const {icons,onChange} = this.props;
     const newIcons = [].concat(icons);
-    newIcons[index] = newIcons[index].concat([{src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032",title:"",text:""}])
+    newIcons[index] = newIcons[index].concat([{linkSrc:"",src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fothers-08.svg?alt=media&token=d7abe544-4ba4-4dd1-8d44-413ee17b8032",title:"",text:""}])
     onChange({icons:newIcons});
   }
 

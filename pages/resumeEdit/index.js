@@ -3,11 +3,13 @@ import g from '../global.css';
 import s from './resumeEdit.css';
 import { connect } from 'react-redux';
 import Nav from '../../components/nav/landingNav'
+import Footer from '../../components/footer'
 import Input from '../../components/blocksEdit/input'
 import Add from '../../components/blocksEdit/add'
 import shortid from 'shortid';
+import Modal from '../../components/modal/index'
 
-import {saveArticleTitle,saveArticleState} from '../../core/actions/current'
+import {saveArticleTitle,saveArticleState,deleteArticle,saveArticlePublic} from '../../core/actions/current'
 import {pullArticle} from '../../core/actions/article'
 import {updateAppState} from '../../core/actions/ui'
 import {uploadEditorState,deleteFile} from '../../core/actions/file'
@@ -25,7 +27,6 @@ const Article = ({file,article,onChange,onAddClick,onToolClick,onUploadEditorSta
         description="A title is the beginning of a sharing."
       />
       {article.editorState.map((b,i)=>{
-
         return <BlockEditor
           key={i}
           onUploadEditorState={onUploadEditorState(b.hash)}
@@ -72,12 +73,14 @@ class ResumeEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      deleteConfirm:false
     }
     this.onChange = this.onChange.bind(this);
     this.onAddClick = this.onAddClick.bind(this);
     this.onToolClick = this.onToolClick.bind(this);
     this.onUploadEditorState = this.onUploadEditorState.bind(this);
     this.sanitize = this.sanitize.bind(this);
+    this.navOnClick = this.navOnClick.bind(this);
   }
 
   static propTypes = {
@@ -100,7 +103,6 @@ class ResumeEdit extends React.Component {
       else {
         var editorState = this.props.article.get("editorState")
         editorState[index].props = Object.assign({},editorState[index].props,changes);
-        console.log(editorState)
         this.props.saveArticleState(editorState);
       }
     }
@@ -144,15 +146,45 @@ class ResumeEdit extends React.Component {
     }
   }
 
+  navOnClick(from,link,status) {
+    console.log(from,link,status)
+    if(from == "right")
+      switch (link) {
+        case 0: this.props.saveArticleState(this.props.article.get("editorState"));break;
+        case 1: this.setState({deleteConfirm:true});break;
+        case 2: this.props.saveArticlePublic(!this.props.article.get("public"));break;
+      }
+    if(from == "left")
+      switch (link) {
+        case 0: this.props.logOut();break;
+        case 1: history.push('/');break;
+        case 2: history.push('/enjoy/?aid=Hk7Vf_e8x');break
+      }
+  }
+
   render() {
-    const {state,props,onChange,onAddClick,onToolClick,onUploadEditorState} = this;
-    const {article,status,file} = props;
+    const {saveArticlePublic,state,props,onChange,onAddClick,navOnClick,onToolClick,onUploadEditorState} = this;
+    const {article,status,file,deleteArticle} = props;
+    const {deleteConfirm} = state;
     return (
       <div className={`${s["editor"]}`}>
+        <Modal onClose={()=>{this.setState({deleteConfirm:false})}} modalStatus={deleteConfirm}>
+          <div className={`${s["delete-modal"]}`}>
+            <h2>Are you sure?</h2>
+            <button onClick={()=>{deleteArticle(article.toJS());this.setState({deleteConfirm:false});history.push('/');}} >Delete</button>
+            <p>Its a bummer to lose something so cool.</p>
+          </div>
+        </Modal>
         <div className={`${s["edit-status"]} ${s["edit-status__"+status]}`}>
           <p>{statusChange(status)}</p>
         </div>
-        <Nav title="impresssive.co" linksL={["Sign out","Back","Inspiration"]} linksR={["Save","Delete","Make Public"]}/>
+        <Nav
+          title="impresssive.co"
+          linksL={["Sign out","Back","Inspiration"]}
+          linksR={["Save","Delete",(article.get("public") == false ? "Make Public": "Make Private")]}
+          onClickR={(i)=>{navOnClick("right",i,true)}}
+          onClickL={(i)=>{navOnClick("left",i,true)}}
+        />
         {(()=>{
           if(article != null);
             if(article.get("uid") != null)
@@ -164,6 +196,7 @@ class ResumeEdit extends React.Component {
                 onAddClick={onAddClick}
                 onUploadEditorState={onUploadEditorState}/>
         })()}
+        <Footer/>
       </div>
     );
   }
@@ -196,6 +229,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     deleteFile: (url) => {
       dispatch(deleteFile(url));
+    },
+    deleteArticle: (article) => {
+      dispatch(deleteArticle(article))
+    },
+    saveArticlePublic: (status) => {
+      dispatch(saveArticlePublic(status))
     }
   }
 }

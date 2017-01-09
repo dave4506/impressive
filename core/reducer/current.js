@@ -19,6 +19,8 @@ export default function(state=defaultState,action) {
       return state.set('article',action.article)
     case SAVE_ARTICLE:
       const updateStatus = state.set("status",action.status);
+      if(action.public != null)
+        return updateStatus.set('article',state.get("article").set("public",action.public))
       if(action.title)
         return updateStatus.set('article',state.get("article").set("title",action.title))
       if(action.editorState)

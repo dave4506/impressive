@@ -85,7 +85,7 @@ export const deleteFile = (url) => {
     return storage.refFromURL(url).delete().then(function(snapshot) {
       dispatch(simpleAction({type:FILE_DELETE,status:NETWORK_STATUS.SUCCESS}));
     }).catch((error)=>{
-      dispatch(simpleAction({type:FILE_DELETE,status:NETWORK_STATUS.ERROR,fileHash,index:blockIndex,error}));
+      dispatch(simpleAction({type:FILE_DELETE,status:NETWORK_STATUS.ERROR,error}));
     });
   }
 }

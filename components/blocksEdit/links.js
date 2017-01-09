@@ -3,7 +3,7 @@ import b from './block.css';
 import s from './links.css';
 import Columns from './columns'
 
-const link = ({title,text,link},onDelete,onChange,i) => {
+const link = ({title,text,linkSrc},onDelete,onChange,i) => {
   return <div className={`${s["block-link"]}`}>
     <h1 className={`${s["block-link-number"]}`}>{i}</h1>
     <div className={`${s["block-link-text-group"]}`}>
@@ -12,6 +12,13 @@ const link = ({title,text,link},onDelete,onChange,i) => {
         placeholder="Title goes here"
         className={`${s["block-link-title"]}`}
         value={title}
+        type="text"/>
+      <input
+        onChange={(e)=>{onChange({linkSrc:e.target.value})}}
+        placeholder="Link goes here"
+        style={{textAlign:"left",width:"100%"}}
+        className={`${b["block-caption"]}`}
+        value={linkSrc}
         type="text"/>
       <textarea
         onChange={(e)=>{onChange({text:e.target.value})}}
@@ -38,13 +45,13 @@ class Links extends React.Component {
 
   onColumnAdd() {
     const {links,onChange} = this.props;
-    onChange({links:links.concat([[{title:"",text:""}]])});
+    onChange({links:links.concat([[{title:"",text:"",linkSrc:""}]])});
   }
 
   onLinkAdd(index) {
     const {links,onChange} = this.props;
     const newLinks = [].concat(links);
-    newLinks[index] = newLinks[index].concat([{title:"",text:""}])
+    newLinks[index] = newLinks[index].concat([{title:"",text:"",linkSrc:""}])
     onChange({links:newLinks});
   }
 
@@ -81,7 +88,9 @@ class Links extends React.Component {
       return <div className={`${s["block-link-column"]}`}>
         {li.map((l,index)=>{
           i++;
-          return <div key={i}>{link(l,this.onDelete(colindex,index),this.onLinkChange(colindex,index),i)}</div>
+          return <div key={i}>
+            {link(l,this.onDelete(colindex,index),this.onLinkChange(colindex,index),i)}
+            </div>
         })}
         <div onClick={()=>{this.onLinkAdd(colindex)}} className={`${s["block-link-column-add"]}`}>
           <img src="https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fui-22.svg?alt=media&token=cb52a56f-d621-4b04-b4b6-d2f141b902e8"/>

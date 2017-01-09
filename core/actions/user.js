@@ -56,6 +56,7 @@ export const logOut = () => {
     dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.LOADING}))
     return firebase.auth().signOut().then(function() {
       dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.SUCCESS}))
+      history.push(`/`);
     }, function(error) {
       dispatch(simpleAction({type:LOG_OUT,status:NETWORK_STATUS.ERROR,error}))
     });

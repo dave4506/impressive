@@ -3,6 +3,8 @@ import b from './block.css';
 import s from './project.css';
 import Tools from '../tools';
 import shortid from 'shortid'
+import {deleteFile} from '../../core/actions/file';
+import {connect} from 'react-redux';
 
 class Project extends React.Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Project extends React.Component {
     this.addProject = this.addProject.bind(this)
     this.onUpload = this.onUpload.bind(this)
     this.onDelete = this.onDelete.bind(this)
+    this.onToolClick = this.onToolClick.bind(this)
   }
 
   onProjectChange(index) {
@@ -40,16 +43,30 @@ class Project extends React.Component {
   }
 
   onDelete(index) {
-    const {projects,onChange} = this.props;
+    const {projects,onChange,deleteFile} = this.props;
     const newProjects = [].concat(projects);
+    const project = newProjects[index];
+    console.log(project);
+    if(project.src)
+      deleteFile(project.src)
     newProjects.splice(index,1);
-    console.log(newProjects)
     onChange({projects:newProjects})
   }
 
   addProject() {
     const {projects,onChange} = this.props;
     onChange({projects:projects.concat([{src:"",text:"",title:""}])})
+  }
+
+  onToolClick(tool) {
+    const {projects,deleteFile,onToolClick} = this.props;
+    if(tool=="DELETE") {
+      projects.map((p)=>{
+        if(p.src)
+          deleteFile(p.src)
+      })
+    }
+    onToolClick(tool)
   }
 
   render() {
@@ -103,9 +120,9 @@ class Project extends React.Component {
         src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fui-15.svg?alt=media&token=d59e8719-fe0e-4333-bf3b-5dfaab428eee"
       },{
         title:"ADD",
-        publicTitle:"Add a icon",
+        publicTitle:"Add a project",
         src:"https://firebasestorage.googleapis.com/v0/b/impresssive-86554.appspot.com/o/icons%2Fui-22.svg?alt=media&token=cb52a56f-d621-4b04-b4b6-d2f141b902e8"
-      }]} onClick={(tool)=>{if(tool!="ADD"){onToolClick(tool)}else{this.addProject()}}}/>
+      }]} onClick={(tool)=>{if(tool!="ADD"){this.onToolClick(tool)}else{this.addProject()}}}/>
 
     </div>
   }
@@ -115,4 +132,23 @@ Project.defaultProps = {
   projects:[]
 };
 
-export default Project
+const mapStateToProps = (state, ownProps) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    deleteFile: (url) => {
+      console.log(url);
+      dispatch(deleteFile(url))
+    }
+  }
+}
+
+const ProjectRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Project)
+
+export default ProjectRedux
