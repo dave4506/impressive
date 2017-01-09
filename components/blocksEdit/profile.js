@@ -17,7 +17,7 @@ class Profile extends React.Component {
     const {onUploadEditorState} = this.props;
     const fileHash = shortid.generate();
     this.setState({profileHash:fileHash})
-    onUploadEditorState({file,fileHash},"profileSrc","single");
+    onUploadEditorState({file,fileHash},"profile_image","single");
   }
 
   render() {

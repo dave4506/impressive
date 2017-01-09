@@ -4,12 +4,40 @@
 }
 
 .block-gallery-imgs-img {
-  height: 30rem;
-  width: auto;
+  width: 40rem;
   padding: 0;
   margin: 0;
+  position: relative;
+  width:50%;
+  float: left;
+}
+
+.block-masonry {
+  width: 100%;
+}
+
+.block-gallery-imgs-img__preview {
+  opacity: 0.5;
 }
 
 .block-gallery-imgs-img img {
-  height: 100%;
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
+  z-index: 398;
+}
+
+.block-gallery-imgs-close {
+  position: absolute;
+  top:0;
+  right:0;
+  z-index: 400;
+  opacity:0.8;
+  margin: 1rem;
+}
+
+.block-masonry:after {
+  content: '';
+  display: block;
+  clear: both;
 }

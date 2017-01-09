@@ -70,7 +70,7 @@ class Project extends React.Component {
   }
 
   render() {
-    const {projects,title,description} = this.props;
+    const {projects,title,description,onChange} = this.props;
     return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-project"]}`} >
       <input
         onChange={(e)=>{onChange({title:e.target.value})}}

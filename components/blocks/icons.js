@@ -3,9 +3,10 @@ import b from './block.css';
 import s from './icons.css';
 import Columns from './columns'
 
-const icon = ({icon,title,text,link}) => {
+const icon = ({src,title,text,link}) => {
+
   return <div className={`${s["block-icon"]}`}>
-    <img className={`${s["block-icon-img"]}`} src={icon}/>
+    <img className={`${s["block-icon-img"]}`} src={src}/>
     <div className={`${s["block-icon-text-group"]}`}>
       <h2 className={`${s["block-icon-title"]}`}>{title}</h2>
       <p className={`${s["block-icon-text"]}`}>{text}</p>

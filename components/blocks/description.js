@@ -3,7 +3,7 @@ import b from './block.css';
 import s from './description.css';
 import Columns from './columns'
 
-const descriptionText = (text) => {
+const descriptionText = ({text}) => {
   return <p className={`${s["block-description-text"]}`}>
     {text}
   </p>

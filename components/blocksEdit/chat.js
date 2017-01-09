@@ -3,7 +3,7 @@ import b from './block.css';
 import s from './chat.css';
 import Tools from '../tools';
 
-const ChatBubble = ({c,index}) => {
+const ChatBubble = ({c,index,chat,onChange}) => {
   return <div className={`${s["block-chat-bubble-wrapper"]} ${s["block-chat-bubble-wrapper__"+c.direction]}`}>
     <p className={`${s["block-chat-bubble"]} ${s["block-chat-bubble__"+c.direction]}`}>{c.text}</p>
     {(()=>{
@@ -63,7 +63,7 @@ class Chat extends React.Component {
         type="text" />
       <div className={`${s["block-chatroom"]}`}>
         {chat.map((c,index)=>{
-          return <ChatBubble key={index} c={c} index={index}/>
+          return <ChatBubble onChange={onChange} key={index} c={c} index={index} chat={chat}/>
         })}
       </div>
       <div className={`${s["chat-input"]}`}>

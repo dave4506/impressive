@@ -16,18 +16,18 @@ class Footer extends React.Component {
         </div>
         <div className={`${s["footer-column"]}`}>
           <p className={`${s["footer-title"]}`}>Product</p>
-          <a onClick={()=>{history.push('/')}} className={`${s["footer-link"]}`}>Create Now</a>
-          <a onClick={()=>{history.push('/enjoy/?aid=Hk7Vf_e8x')}} className={`${s["footer-link"]}`}>Inspiration</a>
-          <a onClick={()=>{history.push('/enjoy/?aid=r1GrR5eIl')}} className={`${s["footer-link"]}`}>FAQ</a>
+          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/')}} className={`${s["footer-link"]}`}>Create Now</a>
+          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy/?aid=Hk7Vf_e8x')}} className={`${s["footer-link"]}`}>Inspiration</a>
+          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy/?aid=r1GrR5eIl')}} className={`${s["footer-link"]}`}>FAQ</a>
         </div>
         <div className={`${s["footer-column"]}`}>
           <p className={`${s["footer-title"]}`}>Contact</p>
-          <a href="mailto:downloadhorizons@protonmail.com?Subject=Got%20some%20ideas?" className={`${s["footer-link"]}`}>Suggestions?</a>
-          <a href="http://downloadhorizons.com/" className={`${s["footer-link"]}`}>Meet our creator</a>
+          <a target="_blank" href="mailto:downloadhorizons@protonmail.com?Subject=Got%20some%20ideas?" className={`${s["footer-link"]}`}>Suggestions?</a>
+          <a target="_blank" href="http://downloadhorizons.com/" className={`${s["footer-link"]}`}>Meet our creator</a>
         </div>
         <div className={`${s["footer-column"]}`}>
           <p className={`${s["footer-title"]}`}>Behind the Scenes</p>
-          <a href="https://medium.com/@davidsun_93561" className={`${s["footer-link"]}`}>Blog</a>
+          <a target="_blank" href="https://medium.com/@davidsun_93561" className={`${s["footer-link"]}`}>Blog</a>
         </div>
         <div className={`${s["footer-column"]}`}>
           <p style={{opacity:0.2}} className={`${s["footer-text"]}`}>The best preparation for tomorrow is doing your best today.</p>

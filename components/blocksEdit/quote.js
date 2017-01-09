@@ -21,7 +21,7 @@ class Quote extends React.Component {
         type="text" />
       <input
         onChange={(e)=>{onChange({author:e.target.value})}}
-        placeholder="wisesage"
+        placeholder="wise sage"
         className={`${b["block-caption"]}`}
         value={author}
         type="text" />

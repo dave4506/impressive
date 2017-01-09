@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import Slider from 'react-slick';
 import b from './block.css';
 import s from './gallery.css';
+var Masonry = require('react-masonry-component');
 
 class Gallery extends React.Component {
   constructor(props) {
@@ -11,29 +11,30 @@ class Gallery extends React.Component {
 
   render() {
     const {images,description,title} = this.props;
-    const settings = {
-      dots: false,
-      infinite: true,
-      autoplay:true,
-      speed: 500,
-      lazyLoad: true,
-      variableWidth:true,
-      pauseOnHover:true,
-      draggable:true,
-      arrows:false
-    };
-    return <div className={`${b["block"]} ${b["block__full-width"]} ${s["block-gallery"]}`} >
+    const masonryOptions = {
+      columnWidth: '.grid-sizer',
+      itemSelector: '.grid-item',
+      percentPosition: true
+    }
+    return <div className={`${b["block"]} ${b["block__standard-width"]} ${s["block-gallery"]}`} >
       <p className={`${b["block-title"]}`}>{title}</p>
       <div className={`${s["block-gallery-imgs"]}`}>
-        <Slider {...settings}>
-          {images.map((image,index)=>{
-            return (
-              <div className={`${s["block-gallery-imgs-img"]}`} key={index}>
-                <img src={image}/>
-              </div>
-            )
-          })}
-        </Slider>
+        <Masonry
+              className={`${s["block-masonry"]}`}
+              elementType={'div'}
+              options={masonryOptions}
+              disableImagesLoaded={false}
+              updateOnEachImageLoad={true}
+          >
+            <div style={{width:"50%"}} className="grid-sizer"></div>
+            {images.map((image,index)=>{
+              return (
+                <div className={`grid-item ${s["block-gallery-imgs-img"]}`} key={index}>
+                  <img src={image}/>
+                </div>
+              )
+            })}
+          </Masonry>
       </div>
       <p className={`${b["block-caption"]}`}>{description}</p>
     </div>

@@ -1,5 +1,6 @@
 .block-icon {
   padding: 1rem 0;
+  display: flex;
 }
 
 .block-icon-text-group {
@@ -24,7 +25,7 @@
 }
 
 .block-icon-img {
-  height: 5rem;
-  margin: 2rem;
+  height: 3rem;
+  margin: 0.5rem;
   width: auto;
 }

@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import {connect} from 'react-redux'
 
-import Slider from 'react-slick';
 import b from './block.css';
 import s from './gallery.css';
 import Tools from '../tools';
@@ -70,7 +69,6 @@ class Gallery extends React.Component {
             })}
             {Object.keys(fileStatus).map((key,index)=>{
               const status = fileStatus[key];
-              console.log(status);
               if(status.status != "SUCCESS" && status.src != null)
                 return <div className={`grid-item ${s["block-gallery-imgs-img"]} ${s["block-gallery-imgs-img__preview"]}`} key={index}>
                   <img src={status.src}/>
