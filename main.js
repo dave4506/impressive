@@ -34,8 +34,6 @@ firebase.initializeApp(config);
 let routes = require('./routes.json'); // Loaded with utils/routes-loader.js
 const container = document.getElementById('container');
 
-//store.dispatch(logOut());
-
 function renderComponent(component) {
   ReactDOM.render(<Provider store={store}>{component}</Provider>, container);
 }

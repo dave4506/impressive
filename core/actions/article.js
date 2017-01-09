@@ -4,7 +4,6 @@ import history from '../history';
 import {setCurrent} from './current';
 import {
   PULL_ARTICLES,
-  PULL_DRAFTS,
   NETWORK_STATUS
 } from "../constants";
 
@@ -20,24 +19,6 @@ const pullArticleIds = (id) => {
   return database.ref(`/user_articles/${id}/`).once('value').then((snapshot)=>{
     return Object.keys(snapshot.val() || {});
   })
-}
-
-const extractDraftIds = (articles,draftIds=[],key="") => {
-  if(articles.length == 0)
-    return draftIds
-  else {
-    const article = articles.pop();
-    draftIds.push(article[key])
-    return extractDraftIds(articles,draftIds,key)
-  }
-}
-
-export const pullArticlesAndSetCurrent = () => {
-  return (dispatch,getState) => {
-    return pullArticles()(dispatch,getState).then(()=>{
-      return switchCurrentToNext(dispatch,getState)
-    })
-  }
 }
 
 export const pullArticles = () => {
