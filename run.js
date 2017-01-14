@@ -18,8 +18,8 @@ const webpack = require('webpack');
 // TODO: Update configuration settings
 const config = {
   title: 'Impressive',        // Your website title
-  url: 'https://rsb.kriasoft.com',          // Your website URL
-  project: 'impressive',      // Firebase project. See README.md -> How to Deploy
+  url: 'https://impresssive.co',          // Your website URL
+  project: 'impresssive-86554',      // Firebase project. See README.md -> How to Deploy
   trackingID: 'UA-XXXXX-Y',                 // Google Analytics Site's ID
 };
 

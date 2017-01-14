@@ -26,4 +26,8 @@ class Description extends React.Component {
   }
 }
 
+Description.defaultProps = {
+  texts:[]
+}
+
 export default Description

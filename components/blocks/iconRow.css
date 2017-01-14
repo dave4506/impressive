@@ -8,3 +8,11 @@
   height: 2rem;
   margin: 1rem;
 }
+
+.block-icon {
+  transition: transform 500ms cubic-bezier(0.2,1,0.3,1);
+}
+
+.block-icon:hover {
+  transform: scale(1.2);
+}

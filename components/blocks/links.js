@@ -3,12 +3,16 @@ import b from './block.css';
 import s from './links.css';
 import Columns from './columns'
 
-const link = ({title,text,link},i) => {
+const link = ({title,text,linkSrc},i) => {
   return <div className={`${s["block-link"]}`}>
     <h1 className={`${s["block-link-number"]}`}>{i}</h1>
     <div className={`${s["block-link-text-group"]}`}>
       <h2 className={`${s["block-link-title"]}`}>{title}</h2>
       <p className={`${s["block-link-text"]}`}>{text}</p>
+      {(()=>{
+        if(linkSrc.length != 0)
+          return <a href={linkSrc}>Check out</a>
+      })()}
     </div>
   </div>
 }

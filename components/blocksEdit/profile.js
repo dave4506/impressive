@@ -29,7 +29,7 @@ class Profile extends React.Component {
       <p className={`${b["block-caption"]}`}>Click on profile to change pic.</p>
       <input onChange={(e)=>{onChange({name:e.target.value})}} className={`${s["block-profile-name"]}`} value={name} placeholder="A great person's name"/>
       <input onChange={(e)=>{onChange({description:e.target.value})}} className={`${s["block-profile-description"]}`} value={description} placeholder="What the person done."/>
-      <input onChange={(e)=>{onChange({link:e.target.value})}} className={`${b["block-caption"]}`} value={link} placeholder="Link to next place."/>
+      <input onChange={(e)=>{onChange({link:e.target.value})}} className={`${b["block-caption"]}`} value={link} placeholder="Link to your site."/>
       <Tools onClick={onToolClick}/>
     </div>
   }

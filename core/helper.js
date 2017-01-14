@@ -30,3 +30,10 @@ export const convertToObject = (list,key) => {
 export const simpleAction = (obj) => {
   return obj;
 }
+
+export const ifArticleExists = (articleId) => {
+  const database = firebase.database();
+  return database.ref('/shorten/'+articleId).once('value').then((snapshot)=>{
+    return snapshot.val() != null
+  });
+}

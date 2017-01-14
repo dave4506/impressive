@@ -5,7 +5,7 @@ import Columns from './columns'
 import Tools from '../tools';
 import IconSelector from '../tools/icon';
 
-const iconComp = ({src,linkSrc,title,text,link},onDelete,onChange,i) => {
+const iconComp = ({src,linkSrc,title,text},onDelete,onChange,i) => {
   return <div className={`${s["block-icon"]}`}>
     <IconSelector
       current={src}

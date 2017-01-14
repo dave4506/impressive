@@ -46,7 +46,7 @@ export const logInWithFB = () => {
 }
 
 export const getCurrentUser = () => {
-  const {photoURL,uid,displayName,email} = firebase.auth().currentUser;
+  const {photoURL,uid,displayName,email} = firebase.auth().currentUser || {};
   const user = {photoURL,uid,displayName,email}
   return {type:USER_STATUS_CHANGE,status:NETWORK_STATUS.SUCCESS,user}
 }

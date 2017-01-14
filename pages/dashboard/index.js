@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
       }
     if(from == "left")
       switch (link) {
-        case 0: history.push('enjoy/?aid=Hk7Vf_e8x');
+        case 0: history.push('/enjoy?aid=Hk7Vf_e8x');
       }
   }
 
@@ -62,10 +62,10 @@ class Dashboard extends React.Component {
     const article = articles[Object.keys(articles)[index]]
     switch (modifier) {
       case "View":
-        history.push(`/enjoy/?aid=${article.shortId}`)
+        history.push(`/enjoy?aid=${article.shortId}`)
         break;
       case "Edit":
-        history.push(`/edit/?uid=${history.getCurrentLocation().query.uid}&aid=${article.shortId}`)
+        history.push(`/edit?uid=${history.getCurrentLocation().query.uid}&aid=${article.shortId}`)
         break;
       case "Delete":
         this.setState({deleteConfirm:true,dArticle:article})
@@ -81,7 +81,7 @@ class Dashboard extends React.Component {
       const art = articles[a]
       return {
         text:art.title,
-        subtext:`${art.views} views`
+        subtext:(art.public ? "public":"for your eyes only")
       }
     })
     table.push({custom:true,component:createNew((e)=>{this.setState({create:e.target.value})},create,()=>{createArticle(create)})});

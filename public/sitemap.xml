@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://rsb.kriasoft.com/</loc>
+    <loc>https://impresssive.co/</loc>
+  </url>
+  <url>
+    <loc>https://impresssive.co/enjoy</loc>
+  </url>
+  <url>
+    <loc>https://impresssive.co/dashboard</loc>
+  </url>
+  <url>
+    <loc>https://impresssive.co/edit</loc>
+  </url>
+  <url>
+    <loc>https://impresssive.co/error</loc>
   </url>
 </urlset>

@@ -20,11 +20,6 @@
     "chunk": "main"
   },
   {
-    "path": "/view",
-    "page": "./pages/view",
-    "chunk": "main"
-  },
-  {
     "path": "/error",
     "page": "./pages/error",
     "chunk": "main"

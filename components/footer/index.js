@@ -17,8 +17,8 @@ class Footer extends React.Component {
         <div className={`${s["footer-column"]}`}>
           <p className={`${s["footer-title"]}`}>Product</p>
           <a style={{cursor:"pointer"}} onClick={()=>{history.push('/')}} className={`${s["footer-link"]}`}>Create Now</a>
-          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy/?aid=Hk7Vf_e8x')}} className={`${s["footer-link"]}`}>Inspiration</a>
-          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy/?aid=r1GrR5eIl')}} className={`${s["footer-link"]}`}>FAQ</a>
+          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy?aid=Hk7Vf_e8x')}} className={`${s["footer-link"]}`}>Inspiration</a>
+          <a style={{cursor:"pointer"}} onClick={()=>{history.push('/enjoy?aid=r1GrR5eIl')}} className={`${s["footer-link"]}`}>FAQ</a>
         </div>
         <div className={`${s["footer-column"]}`}>
           <p className={`${s["footer-title"]}`}>Contact</p>

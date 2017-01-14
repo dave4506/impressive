@@ -1,6 +1,30 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "icons": {
+      ".write": false,
+      ".read": true
+    },
+    "shorten": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    "user_articles": {
+      "$uid": {
+        ".read": true,
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "profiles": {
+      "$uid": {
+        ".read": true,
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "articles": {
+      "$aid": {
+        ".read": "data.child('author').val() === auth.uid || data.child('public').val() === true",
+        ".write": "data.child('author').val() === auth.uid"
+      }
+    }
   }
 }

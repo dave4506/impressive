@@ -1,0 +1,16 @@
+.modal {
+}
+
+.modal h2 {
+  font-family: 'Merriweather', sans-serif;
+  text-align: center;
+  padding: 1rem 0 3rem 0;
+}
+
+.fb-button {
+  background-color: #3b5998;
+  color:white;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+}

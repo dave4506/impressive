@@ -48,7 +48,7 @@ export const uploadEditorState = (fileData,hash,key,structure,custom) => {
     if(block != null) {
       const blockIndex = editorState.indexOf(block);
       const {fileHash,file} = fileData
-      var ref = storage.ref("/editorStatePhotos/").child(`${uid}_|_${hash}_|_${fileHash}.jpg`)
+      var ref = storage.ref("/editorStatePhotos/"+uid+'/').child(`${uid}_|_${hash}_|_${fileHash}.jpg`)
       if(structure == 'single')
         if(block.props[key] != null)
           if(block.props[key].indexOf('default') == -1)

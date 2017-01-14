@@ -21,6 +21,7 @@ import router from './core/router';
 import history from './core/history';
 import firebase from 'firebase';
 import {logOut,currentUserStatus,ifProfileExists} from './core/actions/user';
+import {ifArticleExists} from './core/helper';
 
 var config = {
   apiKey: "AIzaSyCMKqniQiTAeL4Ayd0xP-XtQynfHkG7L3I",
@@ -49,7 +50,7 @@ const handleBeforeRender = (location) => {
         return true;
       }
     })
-  if(location.pathname == '/edit' || location.pathname == '/dashboard')
+  if(location.pathname == '/edit' || location.pathname == '/edit/' || location.pathname == '/dashboard/' || location.pathname == '/dashboard')
     return currentUserStatus().then((uid)=>{
       console.log("uid:",uid)
       if(uid) {
@@ -72,6 +73,11 @@ const handleBeforeRender = (location) => {
         return false;
       }
     })
+  if(location.pathname == '/enjoy' || location.pathname == '/enjoy/') {
+    return ifArticleExists(location.query.aid).then((status)=>{
+      return status;
+    })
+  }
   return Promise.resolve(true);
 }
 // Find and render a web page matching the current URL path,

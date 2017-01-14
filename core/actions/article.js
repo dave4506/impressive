@@ -36,10 +36,10 @@ export const pullArticles = () => {
   }
 }
 
-export const pullArticle = () => {
+export const pullArticle = (artId) => {
   return (dispatch,getState) => {
     dispatch(simpleAction({type:PULL_ARTICLES,status:NETWORK_STATUS.LOADING}));
-    const articleId = history.getCurrentLocation().query.aid;
+    const articleId = artId || history.getCurrentLocation().query.aid;
     const appState = getState().get("ui").get("appState");
     var extractKey = "";
     return database.ref('/shorten/'+articleId).once('value').then((snapshot)=>{

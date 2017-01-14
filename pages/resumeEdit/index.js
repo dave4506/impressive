@@ -96,7 +96,7 @@ class ResumeEdit extends React.Component {
 
   onChange(index) {
     return (changes) => {
-      console.log(changes)
+      //console.log(changes)
       if(index==-1) {
         this.props.saveArticleTitle(changes);
       }
