@@ -36666,6 +36666,11 @@
   
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
+  function openInNewTab(url) {
+    var win = window.open(url, '_blank');
+    win.focus();
+  }
+  
   var IconRow = function (_React$Component) {
     (0, _inherits3.default)(IconRow, _React$Component);
   
@@ -36698,7 +36703,9 @@
             'div',
             { className: '' + _iconRow2.default["block-icon-row-gallery"] },
             icons.map(function (icon, i) {
-              return _react2.default.createElement('img', { className: '' + _iconRow2.default["block-icon"], src: icon.src, key: i });
+              return _react2.default.createElement('img', { onClick: function onClick() {
+                  openInNewTab(icon.link);
+                }, className: '' + _iconRow2.default["block-icon"], src: icon.src, key: i });
             })
           ),
           _react2.default.createElement(

@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 import b from './block.css';
 import s from './iconRow.css';
 
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
 class IconRow extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +19,7 @@ class IconRow extends React.Component {
       <p className={`${b["block-title"]}`}>{title}</p>
       <div className={`${s["block-icon-row-gallery"]}`}>
         {icons.map((icon,i)=>{
-          return <img className={`${s["block-icon"]}`} src={icon.src} key={i}/>
+          return <img onClick={()=>{openInNewTab(icon.link)}} className={`${s["block-icon"]}`} src={icon.src} key={i}/>
         })}
       </div>
       <p className={`${b["block-caption"]}`}>{description}</p>
